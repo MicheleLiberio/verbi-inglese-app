@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verbi Inglese Trainer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 30px 20px 60px;
+      background: #f5f7fb;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    #scoreboard {
+      font-size: 20px;
+      margin-bottom: 25px;
+      line-height: 1.8;
+    }
+
+    #verb {
+      font-size: 34px;
+      font-weight: bold;
+      margin: 30px 0 20px;
+      color: #222;
+      min-height: 40px;
+    }
+
+    .top-buttons {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .top-button {
+      padding: 12px 20px;
+      margin: 8px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 10px;
+      min-width: 180px;
+    }
+
+    .top-button:disabled {
+      background-color: #9e9e9e;
+      cursor: not-allowed;
+    }
+
+    .bottom-button {
+      padding: 12px 22px;
+      margin-top: 45px;
+      font-size: 16px;
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 10px;
+      min-width: 180px;
+    }
+
+    .bottom-button:disabled {
+      background-color: grey;
+      cursor: not-allowed;
+    }
+
+    #result {
+      font-size: 28px;
+      margin-top: 25px;
+      min-height: 40px;
+    }
+
+    #finalMessage {
+      font-size: 28px;
+      font-weight: bold;
+      margin-top: 25px;
+      color: #d35400;
+      min-height: 40px;
+    }
+
+    #restartBtn {
+      display: none;
+      background-color: #ff9800;
+    }
+
+    canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="fireworksCanvas"></canvas>
+
+  <h1>Allenamento Verbi</h1>
+
+  <div id="scoreboard">
+    Corrette: <span id="correctScore">0</span> |
+    Sbagliate: <span id="wrongScore">0</span> |
+    Totale: <span id="totalScore">0</span> / <span id="maxQuestions">10</span>
+    <br />
+    Percentuale: <span id="percentage">0%</span>
+  </div>
+
+  <div id="verb"></div>
+
+  <div class="top-buttons">
+    <button class="top-button answer-btn" onclick="check('to')">TO + infinitive</button>
+    <button class="top-button answer-btn" onclick="check('ing')">-ing</button>
+    <button class="top-button answer-btn" onclick="check('both')">TO o -ing</button>
+    <button class="top-button answer-btn" onclick="check('change')">Cambio significato</button>
+  </div>
+
+  <button id="newBtn" class="bottom-button" onclick="newVerb()" disabled>Nuovo verbo</button>
+  <br />
+  <button id="restartBtn" class="bottom-button" onclick="restartGame()">Ricomincia</button>
+
+  <div id="result"></div>
+  <div id="finalMessage"></div>
+
+  <script>
+    const verbs = {
+      to: ["agree","appear","choose","decide","expect","hope","learn","manage","offer","promise","refuse","seem","tend","threaten","want"],
+      ing: ["admit","avoid","bother","deny","dislike","enjoy","finish","get round to","imagine","insist on","keep (on)","mind","miss","suggest"],
+      both: ["begin","continue","start"],
+      change: ["forget","go on","remember","stop","try"]
+    };
+
+    const labels = {
+      to: "TO + infinitive",
+      ing: "-ing",
+      both: "TO o -ing",
+      change: "Cambio significato"
+    };
+
+    const MAX_QUESTIONS = 10;
+
+    let currentVerb = "";
+    let correctCategory = "";
+    let answered = false;
+
+    let correctScore = 0;
+    let wrongScore = 0;
+    let totalAnswered = 0;
+    let gameOver = false;
+
+    function updateScoreboard() {
+      document.getElementById("correctScore").innerText = correctScore;
+      document.getElementById("wrongScore").innerText = wrongScore;
+      document.getElementById("totalScore").innerText = totalAnswered;
+      document.getElementById("maxQuestions").innerText = MAX_QUESTIONS;
+
+      const percentage = totalAnswered === 0
+        ? 0
+        : Math.round((correctScore / totalAnswered) * 100);
+
+      document.getElementById("percentage").innerText = percentage + "%";
+    }
+
+    function setAnswerButtonsDisabled(disabled) {
+      const buttons = document.querySelectorAll(".answer-btn");
+      buttons.forEach(button => button.disabled = disabled);
+    }
+
+    function getRandomVerb() {
+      const categories = Object.keys(verbs);
+      const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+      const list = verbs[randomCategory];
+      const randomVerb = list[Math.floor(Math.random() * list.length)];
+
+      return {
+        verb: randomVerb,
+        category: randomCategory
+      };
+    }
+
+    function newVerb() {
+      if (gameOver) return;
+
+      const item = getRandomVerb();
+      currentVerb = item.verb;
+      correctCategory = item.category;
+      answered = false;
+
+      document.getElementById("verb").innerText = currentVerb;
+      document.getElementById("result").innerText = "";
+      document.getElementById("finalMessage").innerText = "";
+      document.getElementById("newBtn").disabled = true;
+      setAnswerButtonsDisabled(false);
+    }
+
+    function check(answer) {
+      if (answered || gameOver) return;
+
+      if (answer === correctCategory) {
+        document.getElementById("result").innerText = "😊";
+        correctScore++;
+      } else {
+        document.getElementById("result").innerText = "😢 Corretto: " + labels[correctCategory];
+        wrongScore++;
+      }
+
+      totalAnswered++;
+      answered = true;
+      updateScoreboard();
+      setAnswerButtonsDisabled(true);
+
+      if (totalAnswered >= MAX_QUESTIONS) {
+        endGame();
+      } else {
+        document.getElementById("newBtn").disabled = false;
+      }
+    }
+
+    function endGame() {
+      gameOver = true;
+      document.getElementById("newBtn").disabled = true;
+      document.getElementById("verb").innerText = "Sessione completata";
+      document.getElementById("restartBtn").style.display = "inline-block";
+
+      if (correctScore === MAX_QUESTIONS) {
+        document.getElementById("finalMessage").innerText = "Perfetto! Hai fatto 10/10! 🎉";
+        launchFireworks();
+      } else {
+        document.getElementById("finalMessage").innerText =
+          "Hai completato il quiz con " + correctScore + "/" + MAX_QUESTIONS + ".";
+      }
+    }
+
+    function restartGame() {
+      correctScore = 0;
+      wrongScore = 0;
+      totalAnswered = 0;
+      answered = false;
+      gameOver = false;
+
+      document.getElementById("result").innerText = "";
+      document.getElementById("finalMessage").innerText = "";
+      document.getElementById("restartBtn").style.display = "none";
+
+      updateScoreboard();
+      newVerb();
+    }
+
+    function launchFireworks() {
+      const canvas = document.getElementById("fireworksCanvas");
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      let particles = [];
+
+      for (let i = 0; i < 180; i++) {
+        particles.push({
+          x: canvas.width / 2,
+          y: canvas.height / 2,
+          radius: Math.random() * 3 + 2,
+          dx: (Math.random() - 0.5) * 10,
+          dy: (Math.random() - 0.5) * 10,
+          alpha: 1
+        });
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        particles.forEach(p => {
+          p.x += p.dx;
+          p.y += p.dy;
+          p.alpha -= 0.015;
+
+          ctx.globalAlpha = Math.max(p.alpha, 0);
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = "hsl(" + Math.random() * 360 + ", 100%, 50%)";
+          ctx.fill();
+        });
+
+        ctx.globalAlpha = 1;
+        particles = particles.filter(p => p.alpha > 0);
+
+        if (particles.length > 0) {
+          requestAnimationFrame(animate);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+
+      animate();
+    }
+
+    window.addEventListener("resize", () => {
+      const canvas = document.getElementById("fireworksCanvas");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    updateScoreboard();
+    newVerb();
+  </script>
+</body>
+</html>
