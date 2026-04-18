@@ -11,7 +11,7 @@
       margin: 0;
       padding: 30px 20px 60px;
       background: #f5f7fb;
-    }  
+    }
 
     h1 {
       margin-bottom: 20px;
@@ -55,9 +55,9 @@
 
     .bottom-button {
       padding: 12px 22px;
-      margin-top: 45px;
+      margin-top: 35px;
       font-size: 16px;
-      background-color: #2196F3;
+      background-color: #ff9800;
       color: white;
       border: none;
       cursor: pointer;
@@ -65,9 +65,8 @@
       min-width: 180px;
     }
 
-    .bottom-button:disabled {
-      background-color: grey;
-      cursor: not-allowed;
+    #restartBtn {
+      display: none;
     }
 
     #result {
@@ -82,11 +81,6 @@
       margin-top: 25px;
       color: #d35400;
       min-height: 40px;
-    }
-
-    #restartBtn {
-      display: none;
-      background-color: #ff9800;
     }
 
     canvas {
@@ -120,8 +114,6 @@
     <button class="top-button answer-btn" onclick="check('change')">Cambio significato</button>
   </div>
 
-  <button id="newBtn" class="bottom-button" onclick="newVerb()" disabled>Nuovo verbo</button>
-  <br />
   <button id="restartBtn" class="bottom-button" onclick="restartGame()">Ricomincia</button>
 
   <div id="result"></div>
@@ -143,6 +135,7 @@
     };
 
     const MAX_QUESTIONS = 10;
+    const NEXT_VERB_DELAY = 1400;
 
     let currentVerb = "";
     let correctCategory = "";
@@ -194,38 +187,41 @@
       document.getElementById("verb").innerText = currentVerb;
       document.getElementById("result").innerText = "";
       document.getElementById("finalMessage").innerText = "";
-      document.getElementById("newBtn").disabled = true;
       setAnswerButtonsDisabled(false);
     }
 
     function check(answer) {
       if (answered || gameOver) return;
 
+      answered = true;
+      setAnswerButtonsDisabled(true);
+
       if (answer === correctCategory) {
         document.getElementById("result").innerText = "😊";
         correctScore++;
       } else {
-        document.getElementById("result").innerText = "😢 Corretto: " + labels[correctCategory];
+        document.getElementById("result").innerText =
+          "😢 Corretto: " + labels[correctCategory];
         wrongScore++;
       }
 
       totalAnswered++;
-      answered = true;
       updateScoreboard();
-      setAnswerButtonsDisabled(true);
 
       if (totalAnswered >= MAX_QUESTIONS) {
         endGame();
       } else {
-        document.getElementById("newBtn").disabled = false;
+        setTimeout(() => {
+          newVerb();
+        }, NEXT_VERB_DELAY);
       }
     }
 
     function endGame() {
       gameOver = true;
-      document.getElementById("newBtn").disabled = true;
       document.getElementById("verb").innerText = "Sessione completata";
       document.getElementById("restartBtn").style.display = "inline-block";
+      setAnswerButtonsDisabled(true);
 
       if (correctScore === MAX_QUESTIONS) {
         document.getElementById("finalMessage").innerText = "Perfetto! Hai fatto 10/10! 🎉";
