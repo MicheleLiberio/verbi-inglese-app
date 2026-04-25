@@ -296,8 +296,8 @@
 
     document.getElementById(sectionId).classList.add("active");
 
-    if (sectionId === "practice" && totalAnswered === 0 && !gameOver) {
-      newVerb();
+    if (sectionId === "practice") {
+      restartGame();
     }
   }
 
