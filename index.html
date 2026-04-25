@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Verbi Inglese Trainer</title>
+  <title>English Trainer</title>
 
   <style>
     body {
@@ -27,7 +27,7 @@
       display: block;
     }
 
-    .menu-button, .bottom-button {
+    .menu-button, .bottom-button, .check-button {
       padding: 14px 24px;
       margin: 12px;
       font-size: 18px;
@@ -35,7 +35,7 @@
       border-radius: 12px;
       cursor: pointer;
       color: white;
-      min-width: 180px;
+      min-width: 200px;
     }
 
     .menu-button {
@@ -47,8 +47,12 @@
       margin-top: 30px;
     }
 
+    .check-button {
+      background-color: #4CAF50;
+    }
+
     .theory-box {
-      max-width: 850px;
+      max-width: 900px;
       margin: 0 auto;
       text-align: left;
       background: white;
@@ -63,19 +67,6 @@
       padding: 10px 14px;
       border-left: 5px solid #1f3c88;
       margin: 10px 0;
-    }
-
-    #scoreboard {
-      font-size: 20px;
-      margin-bottom: 25px;
-      line-height: 1.8;
-    }
-
-    #verb {
-      font-size: 34px;
-      font-weight: bold;
-      margin: 30px 0 20px;
-      min-height: 40px;
     }
 
     .buttons-grid {
@@ -98,28 +89,69 @@
       min-height: 52px;
     }
 
-    .top-button:disabled {
+    .top-button:disabled,
+    .check-button:disabled {
       background-color: #9e9e9e;
       cursor: not-allowed;
     }
 
-    #restartBtn {
-      display: none;
-      background-color: #ff9800;
+    .scoreboard {
+      font-size: 20px;
+      margin-bottom: 25px;
+      line-height: 1.8;
     }
 
-    #result {
+    .big-verb {
+      font-size: 34px;
+      font-weight: bold;
+      margin: 30px 0 20px;
+      min-height: 40px;
+    }
+
+    .result {
       font-size: 28px;
       margin-top: 25px;
       min-height: 40px;
     }
 
-    #finalMessage {
+    .final-message {
       font-size: 28px;
       font-weight: bold;
       margin-top: 25px;
       color: #d35400;
       min-height: 40px;
+    }
+
+    input {
+      padding: 12px;
+      margin: 8px;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      width: 220px;
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background: #eef3ff;
+    }
+
+    #restartToIngBtn,
+    #restartIrregularBtn {
+      display: none;
+      background-color: #ff9800;
     }
 
     canvas {
@@ -134,8 +166,8 @@
         grid-template-columns: 1fr;
       }
 
-      .top-button {
-        font-size: 15px;
+      input {
+        width: 85%;
       }
     }
   </style>
@@ -145,150 +177,243 @@
 
 <canvas id="fireworksCanvas"></canvas>
 
+<!-- HOME PRINCIPALE -->
 <div id="home" class="section active">
-  <h1>Allenamento Verbi Inglesi</h1>
-  <p>Scegli cosa vuoi fare:</p>
+  <h1>English Trainer</h1>
+  <p>Scegli un argomento:</p>
 
-  <button class="menu-button" onclick="showSection('theory')">Teoria</button>
-  <button class="menu-button" onclick="showSection('practice')">Pratica</button>
+  <button class="menu-button" onclick="showSection('toIngMenu')">Verbi TO / -ING</button>
+  <button class="menu-button" onclick="showSection('irregularMenu')">Irregular Verbs</button>
 </div>
 
-<div id="theory" class="section">
+<!-- MENU TO / ING -->
+<div id="toIngMenu" class="section">
+  <h1>Verbi TO / -ING</h1>
+
+  <button class="menu-button" onclick="showSection('toIngTheory')">Teoria</button>
+  <button class="menu-button" onclick="showSection('toIngPractice')">Pratica</button>
+
+  <br>
+  <button class="bottom-button" onclick="showSection('home')">Torna alla home</button>
+</div>
+
+<!-- TEORIA TO / ING -->
+<div id="toIngTheory" class="section">
   <h1>Teoria</h1>
 
   <div class="theory-box">
     <h2>Verbs followed by to + infinitive or -ing</h2>
 
     <h3>1. Verbi seguiti da TO + infinitive</h3>
-    <p>Questi verbi sono seguiti da <strong>to + infinitive</strong>:</p>
     <p>
       agree, appear, choose, decide, expect, hope, learn, manage, offer,
       promise, refuse, seem, tend, threaten, want.
     </p>
 
     <div class="example">
-      <strong>Example:</strong><br>
       We managed <strong>to finish</strong> the report by the end of the day.
     </div>
 
-    <h3>2. Verbi seguiti da -ing</h3>
-    <p>Questi verbi sono seguiti dalla forma <strong>-ing</strong>:</p>
+    <h3>2. Verbi seguiti da -ING</h3>
     <p>
       admit, avoid, bother, deny, dislike, enjoy, finish, get round to,
       imagine, insist on, keep (on), mind, miss, suggest.
     </p>
 
     <div class="example">
-      <strong>Example:</strong><br>
       I don’t know anyone who enjoys <strong>doing</strong> housework.
     </div>
 
-    <h3>3. Verbi seguiti da TO oppure -ING senza cambio di significato</h3>
-    <p>Alcuni verbi possono essere seguiti da entrambe le forme senza cambiare significato:</p>
+    <h3>3. TO oppure -ING senza cambio di significato</h3>
     <p><strong>begin, continue, start</strong></p>
 
     <div class="example">
-      You may begin <strong>writing</strong> as soon as I say so.<br>
-      You may begin <strong>to write</strong> as soon as I say so.
+      You may begin <strong>writing</strong>.<br>
+      You may begin <strong>to write</strong>.
     </div>
 
-    <h3>4. Verbi seguiti da TO oppure -ING con cambio di significato</h3>
-    <p>Alcuni verbi cambiano significato a seconda della struttura usata:</p>
+    <h3>4. TO oppure -ING con cambio di significato</h3>
     <p><strong>forget, go on, remember, stop, try</strong></p>
-
-    <h3>Forget</h3>
-    <div class="example">
-      I forgot <strong>to talk</strong> to her about it.<br>
-      = Non l’ho fatto perché me ne sono dimenticato.
-    </div>
-    <div class="example">
-      I’ll never forget <strong>talking</strong> to her about it.<br>
-      = L’ho fatto e lo ricordo.
-    </div>
-
-    <h3>Go on</h3>
-    <div class="example">
-      He went on <strong>to read</strong> a book.<br>
-      = Ha cambiato azione.
-    </div>
-    <div class="example">
-      He went on <strong>reading</strong> a book.<br>
-      = Ha continuato la stessa azione.
-    </div>
-
-    <h3>Regret</h3>
-    <div class="example">
-      I regret <strong>to tell</strong> you that nobody survived the fire.<br>
-      = Sto per dirti qualcosa (notizia negativa).
-    </div>
-    <div class="example">
-      I regret <strong>telling</strong> you that nobody survived the fire.<br>
-      = L’ho già detto e me ne pento.
-    </div>
 
     <h3>Remember</h3>
     <div class="example">
-      Please remember <strong>to switch</strong> the lights off.<br>
-      = Devi ancora farlo.
+      Remember <strong>to call</strong> her. = ricordati di farlo.
     </div>
     <div class="example">
-      I remember <strong>switching</strong> the lights off.<br>
-      = L’ho fatto e lo ricordo.
+      I remember <strong>calling</strong> her. = l’ho fatto e lo ricordo.
+    </div>
+
+    <h3>Forget</h3>
+    <div class="example">
+      I forgot <strong>to close</strong> the door. = non l’ho fatto.
+    </div>
+    <div class="example">
+      I forgot <strong>closing</strong> the door. = l’ho fatto ma non me lo ricordavo.
     </div>
 
     <h3>Stop</h3>
     <div class="example">
-      I stopped <strong>asking</strong> him about his son.<br>
-      = Ho smesso di fare quella cosa.
+      I stopped <strong>smoking</strong>. = ho smesso di fumare.
     </div>
     <div class="example">
-      I stopped <strong>to ask</strong> him about his son.<br>
-      = Mi sono fermato per fare un’altra azione.
+      I stopped <strong>to smoke</strong>. = mi sono fermato per fumare.
     </div>
 
     <h3>Try</h3>
     <div class="example">
-      Have you tried <strong>changing</strong> your diet?<br>
-      = Hai provato come esperimento?
+      Try <strong>opening</strong> the window. = prova come esperimento.
     </div>
     <div class="example">
-      Have you tried <strong>to change</strong> your diet?<br>
-      = Hai fatto uno sforzo per cambiarla?
+      I tried <strong>to open</strong> the window. = ho fatto uno sforzo.
     </div>
   </div>
 
+  <button class="bottom-button" onclick="showSection('toIngMenu')">Indietro</button>
+</div>
+
+<!-- PRATICA TO / ING -->
+<div id="toIngPractice" class="section">
+  <h1>Pratica TO / -ING</h1>
+
+  <div class="scoreboard">
+    Corrette: <span id="toIngCorrect">0</span> |
+    Sbagliate: <span id="toIngWrong">0</span> |
+    Totale: <span id="toIngTotal">0</span> / 10
+    <br>
+    Percentuale: <span id="toIngPercentage">0%</span>
+  </div>
+
+  <div id="toIngVerb" class="big-verb"></div>
+
+  <div class="buttons-grid">
+    <button class="top-button toIngAnswer" onclick="checkToIng('to')">TO + infinitive</button>
+    <button class="top-button toIngAnswer" onclick="checkToIng('ing')">-ing</button>
+    <button class="top-button toIngAnswer" onclick="checkToIng('both')">TO o -ing</button>
+    <button class="top-button toIngAnswer" onclick="checkToIng('change')">Cambio significato</button>
+  </div>
+
+  <button id="restartToIngBtn" class="bottom-button" onclick="restartToIng()">Ricomincia</button>
+
+  <div id="toIngResult" class="result"></div>
+  <div id="toIngFinal" class="final-message"></div>
+
+  <button class="bottom-button" onclick="showSection('toIngMenu')">Indietro</button>
+</div>
+
+<!-- MENU IRREGULAR -->
+<div id="irregularMenu" class="section">
+  <h1>Irregular Verbs</h1>
+
+  <button class="menu-button" onclick="showSection('irregularTheory')">Teoria</button>
+  <button class="menu-button" onclick="showSection('irregularPractice')">Pratica</button>
+
+  <br>
   <button class="bottom-button" onclick="showSection('home')">Torna alla home</button>
 </div>
 
-<div id="practice" class="section">
-  <h1>Pratica</h1>
+<!-- TEORIA IRREGULAR -->
+<div id="irregularTheory" class="section">
+  <h1>Teoria Irregular Verbs</h1>
 
-  <div id="scoreboard">
-    Corrette: <span id="correctScore">0</span> |
-    Sbagliate: <span id="wrongScore">0</span> |
-    Totale: <span id="totalScore">0</span> / <span id="maxQuestions">10</span>
+  <div class="theory-box">
+    <h2>Cosa sono gli irregular verbs?</h2>
+
+    <p>
+      Gli <strong>irregular verbs</strong> sono verbi che non formano il passato con la normale regola <strong>-ed</strong>.
+    </p>
+
+    <div class="example">
+      Regular: work → worked → worked<br>
+      Irregular: break → broke → broken
+    </div>
+
+    <h3>Le 3 forme</h3>
+    <p>
+      Ogni verbo irregolare ha tre forme importanti:
+    </p>
+
+    <ul>
+      <li><strong>Infinitive</strong>: forma base</li>
+      <li><strong>Past Simple</strong>: passato semplice</li>
+      <li><strong>Past Participle</strong>: usato nei tempi composti, come il present perfect</li>
+    </ul>
+
+    <div class="example">
+      I <strong>broke</strong> my phone yesterday. = Past Simple<br>
+      I have <strong>broken</strong> my phone. = Past Participle
+    </div>
+
+    <h3>Tabella</h3>
+
+    <table>
+      <tr><th>Infinitive</th><th>Past Simple</th><th>Past Participle</th></tr>
+      <tr><td>break</td><td>broke</td><td>broken</td></tr>
+      <tr><td>bring</td><td>brought</td><td>brought</td></tr>
+      <tr><td>broadcast</td><td>broadcast</td><td>broadcast</td></tr>
+      <tr><td>build</td><td>built</td><td>built</td></tr>
+      <tr><td>choose</td><td>chose</td><td>chosen</td></tr>
+      <tr><td>cost</td><td>cost</td><td>cost</td></tr>
+      <tr><td>cut</td><td>cut</td><td>cut</td></tr>
+      <tr><td>deal</td><td>dealt</td><td>dealt</td></tr>
+      <tr><td>draw</td><td>drew</td><td>drawn</td></tr>
+      <tr><td>fly</td><td>flew</td><td>flown</td></tr>
+      <tr><td>forget</td><td>forgot</td><td>forgotten</td></tr>
+      <tr><td>grow</td><td>grew</td><td>grown</td></tr>
+      <tr><td>hear</td><td>heard</td><td>heard</td></tr>
+      <tr><td>hit</td><td>hit</td><td>hit</td></tr>
+      <tr><td>hold</td><td>held</td><td>held</td></tr>
+      <tr><td>mean</td><td>meant</td><td>meant</td></tr>
+      <tr><td>pay</td><td>paid</td><td>paid</td></tr>
+      <tr><td>rise</td><td>rose</td><td>risen</td></tr>
+      <tr><td>shake</td><td>shook</td><td>shaken</td></tr>
+      <tr><td>sing</td><td>sang</td><td>sung</td></tr>
+      <tr><td>sink</td><td>sank</td><td>sunk</td></tr>
+      <tr><td>sleep</td><td>slept</td><td>slept</td></tr>
+      <tr><td>spend</td><td>spent</td><td>spent</td></tr>
+      <tr><td>spill</td><td>spilt</td><td>spilt</td></tr>
+      <tr><td>steal</td><td>stole</td><td>stolen</td></tr>
+      <tr><td>swear</td><td>swore</td><td>sworn</td></tr>
+      <tr><td>teach</td><td>taught</td><td>taught</td></tr>
+      <tr><td>wear</td><td>wore</td><td>worn</td></tr>
+      <tr><td>win</td><td>won</td><td>won</td></tr>
+    </table>
+  </div>
+
+  <button class="bottom-button" onclick="showSection('irregularMenu')">Indietro</button>
+</div>
+
+<!-- PRATICA IRREGULAR -->
+<div id="irregularPractice" class="section">
+  <h1>Pratica Irregular Verbs</h1>
+
+  <div class="scoreboard">
+    Corrette: <span id="irrCorrect">0</span> |
+    Sbagliate: <span id="irrWrong">0</span> |
+    Totale: <span id="irrTotal">0</span> / 10
     <br>
-    Percentuale: <span id="percentage">0%</span>
+    Percentuale: <span id="irrPercentage">0%</span>
   </div>
 
-  <div id="verb"></div>
+  <div id="irrVerb" class="big-verb"></div>
 
-  <div class="buttons-grid">
-    <button class="top-button answer-btn" onclick="check('to')">TO + infinitive</button>
-    <button class="top-button answer-btn" onclick="check('ing')">-ing</button>
-    <button class="top-button answer-btn" onclick="check('both')">TO o -ing</button>
-    <button class="top-button answer-btn" onclick="check('change')">Cambio significato</button>
-  </div>
+  <input id="pastInput" placeholder="Past Simple">
+  <input id="participleInput" placeholder="Past Participle">
 
-  <button id="restartBtn" class="bottom-button" onclick="restartGame()">Ricomincia</button>
+  <br>
 
-  <div id="result"></div>
-  <div id="finalMessage"></div>
+  <button id="checkIrregularBtn" class="check-button" onclick="checkIrregular()">Verifica</button>
+  <button id="restartIrregularBtn" class="bottom-button" onclick="restartIrregular()">Ricomincia</button>
 
-  <button class="bottom-button" onclick="showSection('home')">Torna alla home</button>
+  <div id="irrResult" class="result"></div>
+  <div id="irrFinal" class="final-message"></div>
+
+  <button class="bottom-button" onclick="showSection('irregularMenu')">Indietro</button>
 </div>
 
 <script>
+  const MAX_QUESTIONS = 10;
+  const NEXT_DELAY = 1400;
+
   function showSection(sectionId) {
     document.querySelectorAll(".section").forEach(section => {
       section.classList.remove("active");
@@ -296,138 +421,254 @@
 
     document.getElementById(sectionId).classList.add("active");
 
-    if (sectionId === "practice") {
-      restartGame();
+    if (sectionId === "toIngPractice") {
+      restartToIng();
+    }
+
+    if (sectionId === "irregularPractice") {
+      restartIrregular();
     }
   }
 
-  const verbs = {
+  /* ---------------- TO / ING ---------------- */
+
+  const toIngVerbs = {
     to: ["agree","appear","choose","decide","expect","hope","learn","manage","offer","promise","refuse","seem","tend","threaten","want"],
     ing: ["admit","avoid","bother","deny","dislike","enjoy","finish","get round to","imagine","insist on","keep (on)","mind","miss","suggest"],
     both: ["begin","continue","start"],
-    change: ["forget","go on","regret","remember","stop","try"]
+    change: ["forget","go on","remember","stop","try"]
   };
 
-  const labels = {
+  const toIngLabels = {
     to: "TO + infinitive",
     ing: "-ing",
     both: "TO o -ing",
     change: "Cambio significato"
   };
 
-  const MAX_QUESTIONS = 10;
-  const NEXT_VERB_DELAY = 1400;
+  let toIngCurrentCategory = "";
+  let toIngAnswered = false;
+  let toIngCorrect = 0;
+  let toIngWrong = 0;
+  let toIngTotal = 0;
+  let toIngGameOver = false;
 
-  let currentVerb = "";
-  let correctCategory = "";
-  let answered = false;
+  function updateToIngScore() {
+    document.getElementById("toIngCorrect").innerText = toIngCorrect;
+    document.getElementById("toIngWrong").innerText = toIngWrong;
+    document.getElementById("toIngTotal").innerText = toIngTotal;
 
-  let correctScore = 0;
-  let wrongScore = 0;
-  let totalAnswered = 0;
-  let gameOver = false;
-
-  function updateScoreboard() {
-    document.getElementById("correctScore").innerText = correctScore;
-    document.getElementById("wrongScore").innerText = wrongScore;
-    document.getElementById("totalScore").innerText = totalAnswered;
-    document.getElementById("maxQuestions").innerText = MAX_QUESTIONS;
-
-    const percentage = totalAnswered === 0
-      ? 0
-      : Math.round((correctScore / totalAnswered) * 100);
-
-    document.getElementById("percentage").innerText = percentage + "%";
+    const percentage = toIngTotal === 0 ? 0 : Math.round((toIngCorrect / toIngTotal) * 100);
+    document.getElementById("toIngPercentage").innerText = percentage + "%";
   }
 
-  function setAnswerButtonsDisabled(disabled) {
-    document.querySelectorAll(".answer-btn").forEach(button => {
-      button.disabled = disabled;
+  function setToIngButtons(disabled) {
+    document.querySelectorAll(".toIngAnswer").forEach(btn => {
+      btn.disabled = disabled;
     });
   }
 
-  function getRandomVerb() {
-    const categories = Object.keys(verbs);
-    const randomCategory = categories[Math.floor(Math.random() * categories.length)];
-    const list = verbs[randomCategory];
-    const randomVerb = list[Math.floor(Math.random() * list.length)];
+  function newToIngVerb() {
+    if (toIngGameOver) return;
 
-    return {
-      verb: randomVerb,
-      category: randomCategory
-    };
+    const categories = Object.keys(toIngVerbs);
+    const category = categories[Math.floor(Math.random() * categories.length)];
+    const list = toIngVerbs[category];
+    const verb = list[Math.floor(Math.random() * list.length)];
+
+    toIngCurrentCategory = category;
+    toIngAnswered = false;
+
+    document.getElementById("toIngVerb").innerText = verb;
+    document.getElementById("toIngResult").innerText = "";
+    document.getElementById("toIngFinal").innerText = "";
+    setToIngButtons(false);
   }
 
-  function newVerb() {
-    if (gameOver) return;
+  function checkToIng(answer) {
+    if (toIngAnswered || toIngGameOver) return;
 
-    const item = getRandomVerb();
-    currentVerb = item.verb;
-    correctCategory = item.category;
-    answered = false;
+    toIngAnswered = true;
+    setToIngButtons(true);
 
-    document.getElementById("verb").innerText = currentVerb;
-    document.getElementById("result").innerText = "";
-    document.getElementById("finalMessage").innerText = "";
-    setAnswerButtonsDisabled(false);
-  }
-
-  function check(answer) {
-    if (answered || gameOver) return;
-
-    answered = true;
-    setAnswerButtonsDisabled(true);
-
-    if (answer === correctCategory) {
-      document.getElementById("result").innerText = "😊";
-      correctScore++;
+    if (answer === toIngCurrentCategory) {
+      document.getElementById("toIngResult").innerText = "😊";
+      toIngCorrect++;
     } else {
-      document.getElementById("result").innerText =
-        "😢 Corretto: " + labels[correctCategory];
-      wrongScore++;
+      document.getElementById("toIngResult").innerText = "😢 Corretto: " + toIngLabels[toIngCurrentCategory];
+      toIngWrong++;
     }
 
-    totalAnswered++;
-    updateScoreboard();
+    toIngTotal++;
+    updateToIngScore();
 
-    if (totalAnswered >= MAX_QUESTIONS) {
-      endGame();
+    if (toIngTotal >= MAX_QUESTIONS) {
+      endToIngGame();
     } else {
-      setTimeout(() => {
-        newVerb();
-      }, NEXT_VERB_DELAY);
+      setTimeout(newToIngVerb, NEXT_DELAY);
     }
   }
 
-  function endGame() {
-    gameOver = true;
-    document.getElementById("verb").innerText = "Sessione completata";
-    document.getElementById("restartBtn").style.display = "inline-block";
-    setAnswerButtonsDisabled(true);
+  function endToIngGame() {
+    toIngGameOver = true;
+    document.getElementById("toIngVerb").innerText = "Sessione completata";
+    document.getElementById("restartToIngBtn").style.display = "inline-block";
 
-    if (correctScore === MAX_QUESTIONS) {
-      document.getElementById("finalMessage").innerText = "Perfetto! Hai fatto 10/10! 🎉";
+    if (toIngCorrect === MAX_QUESTIONS) {
+      document.getElementById("toIngFinal").innerText = "Perfetto! Hai fatto 10/10! 🎉";
       launchFireworks();
     } else {
-      document.getElementById("finalMessage").innerText =
-        "Hai completato il quiz con " + correctScore + "/" + MAX_QUESTIONS + ".";
+      document.getElementById("toIngFinal").innerText = "Hai completato il quiz con " + toIngCorrect + "/10.";
     }
   }
 
-  function restartGame() {
-    correctScore = 0;
-    wrongScore = 0;
-    totalAnswered = 0;
-    answered = false;
-    gameOver = false;
+  function restartToIng() {
+    toIngCorrect = 0;
+    toIngWrong = 0;
+    toIngTotal = 0;
+    toIngAnswered = false;
+    toIngGameOver = false;
 
-    document.getElementById("result").innerText = "";
-    document.getElementById("finalMessage").innerText = "";
-    document.getElementById("restartBtn").style.display = "none";
+    document.getElementById("restartToIngBtn").style.display = "none";
+    document.getElementById("toIngResult").innerText = "";
+    document.getElementById("toIngFinal").innerText = "";
 
-    updateScoreboard();
-    newVerb();
+    updateToIngScore();
+    newToIngVerb();
   }
+
+  /* ---------------- IRREGULAR VERBS ---------------- */
+
+  const irregularVerbs = [
+    { base: "break", past: "broke", participle: "broken" },
+    { base: "bring", past: "brought", participle: "brought" },
+    { base: "broadcast", past: "broadcast", participle: "broadcast" },
+    { base: "build", past: "built", participle: "built" },
+    { base: "choose", past: "chose", participle: "chosen" },
+    { base: "cost", past: "cost", participle: "cost" },
+    { base: "cut", past: "cut", participle: "cut" },
+    { base: "deal", past: "dealt", participle: "dealt" },
+    { base: "draw", past: "drew", participle: "drawn" },
+    { base: "fly", past: "flew", participle: "flown" },
+    { base: "forget", past: "forgot", participle: "forgotten" },
+    { base: "grow", past: "grew", participle: "grown" },
+    { base: "hear", past: "heard", participle: "heard" },
+    { base: "hit", past: "hit", participle: "hit" },
+    { base: "hold", past: "held", participle: "held" },
+    { base: "mean", past: "meant", participle: "meant" },
+    { base: "pay", past: "paid", participle: "paid" },
+    { base: "rise", past: "rose", participle: "risen" },
+    { base: "shake", past: "shook", participle: "shaken" },
+    { base: "sing", past: "sang", participle: "sung" },
+    { base: "sink", past: "sank", participle: "sunk" },
+    { base: "sleep", past: "slept", participle: "slept" },
+    { base: "spend", past: "spent", participle: "spent" },
+    { base: "spill", past: "spilt", participle: "spilt" },
+    { base: "steal", past: "stole", participle: "stolen" },
+    { base: "swear", past: "swore", participle: "sworn" },
+    { base: "teach", past: "taught", participle: "taught" },
+    { base: "wear", past: "wore", participle: "worn" },
+    { base: "win", past: "won", participle: "won" }
+  ];
+
+  let irrCurrentVerb = null;
+  let irrCorrect = 0;
+  let irrWrong = 0;
+  let irrTotal = 0;
+  let irrAnswered = false;
+  let irrGameOver = false;
+
+  function updateIrregularScore() {
+    document.getElementById("irrCorrect").innerText = irrCorrect;
+    document.getElementById("irrWrong").innerText = irrWrong;
+    document.getElementById("irrTotal").innerText = irrTotal;
+
+    const percentage = irrTotal === 0 ? 0 : Math.round((irrCorrect / irrTotal) * 100);
+    document.getElementById("irrPercentage").innerText = percentage + "%";
+  }
+
+  function newIrregularVerb() {
+    if (irrGameOver) return;
+
+    irrCurrentVerb = irregularVerbs[Math.floor(Math.random() * irregularVerbs.length)];
+    irrAnswered = false;
+
+    document.getElementById("irrVerb").innerText = irrCurrentVerb.base + " → ___ → ___";
+    document.getElementById("pastInput").value = "";
+    document.getElementById("participleInput").value = "";
+    document.getElementById("irrResult").innerText = "";
+    document.getElementById("irrFinal").innerText = "";
+    document.getElementById("checkIrregularBtn").disabled = false;
+    document.getElementById("pastInput").disabled = false;
+    document.getElementById("participleInput").disabled = false;
+    document.getElementById("pastInput").focus();
+  }
+
+  function checkIrregular() {
+    if (irrAnswered || irrGameOver) return;
+
+    const pastAnswer = document.getElementById("pastInput").value.trim().toLowerCase();
+    const participleAnswer = document.getElementById("participleInput").value.trim().toLowerCase();
+
+    const pastCorrect = pastAnswer === irrCurrentVerb.past;
+    const participleCorrect = participleAnswer === irrCurrentVerb.participle;
+
+    irrAnswered = true;
+    document.getElementById("checkIrregularBtn").disabled = true;
+    document.getElementById("pastInput").disabled = true;
+    document.getElementById("participleInput").disabled = true;
+
+    if (pastCorrect && participleCorrect) {
+      document.getElementById("irrResult").innerText = "😊 Corretto!";
+      irrCorrect++;
+    } else {
+      document.getElementById("irrResult").innerText =
+        "😢 Corretto: " + irrCurrentVerb.base + " → " + irrCurrentVerb.past + " → " + irrCurrentVerb.participle;
+      irrWrong++;
+    }
+
+    irrTotal++;
+    updateIrregularScore();
+
+    if (irrTotal >= MAX_QUESTIONS) {
+      endIrregularGame();
+    } else {
+      setTimeout(newIrregularVerb, NEXT_DELAY);
+    }
+  }
+
+  function endIrregularGame() {
+    irrGameOver = true;
+    document.getElementById("irrVerb").innerText = "Sessione completata";
+    document.getElementById("restartIrregularBtn").style.display = "inline-block";
+    document.getElementById("checkIrregularBtn").disabled = true;
+    document.getElementById("pastInput").disabled = true;
+    document.getElementById("participleInput").disabled = true;
+
+    if (irrCorrect === MAX_QUESTIONS) {
+      document.getElementById("irrFinal").innerText = "Perfetto! Hai fatto 10/10! 🎉";
+      launchFireworks();
+    } else {
+      document.getElementById("irrFinal").innerText = "Hai completato il quiz con " + irrCorrect + "/10.";
+    }
+  }
+
+  function restartIrregular() {
+    irrCorrect = 0;
+    irrWrong = 0;
+    irrTotal = 0;
+    irrAnswered = false;
+    irrGameOver = false;
+
+    document.getElementById("restartIrregularBtn").style.display = "none";
+    document.getElementById("irrResult").innerText = "";
+    document.getElementById("irrFinal").innerText = "";
+
+    updateIrregularScore();
+    newIrregularVerb();
+  }
+
+  /* ---------------- FIREWORKS ---------------- */
 
   function launchFireworks() {
     const canvas = document.getElementById("fireworksCanvas");
@@ -482,8 +723,6 @@
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   });
-
-  updateScoreboard();
 </script>
 
 </body>
