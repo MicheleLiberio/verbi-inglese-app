@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Verbi Inglese Trainer</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -11,10 +12,57 @@
       margin: 0;
       padding: 30px 20px 60px;
       background: #f5f7fb;
+      color: #222;
     }
 
-    h1 {
-      margin-bottom: 20px;
+    h1, h2, h3 {
+      color: #1f3c88;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .active {
+      display: block;
+    }
+
+    .menu-button, .bottom-button {
+      padding: 14px 24px;
+      margin: 12px;
+      font-size: 18px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      color: white;
+      min-width: 180px;
+    }
+
+    .menu-button {
+      background-color: #4CAF50;
+    }
+
+    .bottom-button {
+      background-color: #2196F3;
+      margin-top: 30px;
+    }
+
+    .theory-box {
+      max-width: 850px;
+      margin: 0 auto;
+      text-align: left;
+      background: white;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      line-height: 1.6;
+    }
+
+    .example {
+      background: #eef3ff;
+      padding: 10px 14px;
+      border-left: 5px solid #1f3c88;
+      margin: 10px 0;
     }
 
     #scoreboard {
@@ -27,25 +75,27 @@
       font-size: 34px;
       font-weight: bold;
       margin: 30px 0 20px;
-      color: #222;
       min-height: 40px;
     }
 
-    .top-buttons {
-      max-width: 700px;
+    .buttons-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      max-width: 520px;
       margin: 0 auto;
     }
 
     .top-button {
+      width: 100%;
       padding: 12px 20px;
-      margin: 8px;
       font-size: 16px;
       background-color: #4CAF50;
       color: white;
       border: none;
       cursor: pointer;
       border-radius: 10px;
-      min-width: 180px;
+      min-height: 52px;
     }
 
     .top-button:disabled {
@@ -53,20 +103,9 @@
       cursor: not-allowed;
     }
 
-    .bottom-button {
-      padding: 12px 22px;
-      margin-top: 35px;
-      font-size: 16px;
-      background-color: #ff9800;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 10px;
-      min-width: 180px;
-    }
-
     #restartBtn {
       display: none;
+      background-color: #ff9800;
     }
 
     #result {
@@ -89,25 +128,142 @@
       pointer-events: none;
       z-index: 999;
     }
+
+    @media (max-width: 600px) {
+      .buttons-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .top-button {
+        font-size: 15px;
+      }
+    }
   </style>
 </head>
+
 <body>
 
-  <canvas id="fireworksCanvas"></canvas>
+<canvas id="fireworksCanvas"></canvas>
 
-  <h1>Allenamento Verbi</h1>
+<div id="home" class="section active">
+  <h1>Allenamento Verbi Inglesi</h1>
+  <p>Scegli cosa vuoi fare:</p>
+
+  <button class="menu-button" onclick="showSection('theory')">Teoria</button>
+  <button class="menu-button" onclick="showSection('practice')">Pratica</button>
+</div>
+
+<div id="theory" class="section">
+  <h1>Teoria</h1>
+
+  <div class="theory-box">
+    <h2>Verbs followed by to + infinitive or -ing</h2>
+
+    <h3>1. Verbi seguiti da TO + infinitive</h3>
+    <p>Questi verbi sono seguiti da <strong>to + infinitive</strong>:</p>
+    <p>
+      agree, appear, choose, decide, expect, hope, learn, manage, offer,
+      promise, refuse, seem, tend, threaten, want.
+    </p>
+
+    <div class="example">
+      <strong>Example:</strong><br>
+      We managed <strong>to finish</strong> the report by the end of the day.
+    </div>
+
+    <h3>2. Verbi seguiti da -ing</h3>
+    <p>Questi verbi sono seguiti dalla forma <strong>-ing</strong>:</p>
+    <p>
+      admit, avoid, bother, deny, dislike, enjoy, finish, get round to,
+      imagine, insist on, keep (on), mind, miss, suggest.
+    </p>
+
+    <div class="example">
+      <strong>Example:</strong><br>
+      I don’t know anyone who enjoys <strong>doing</strong> housework.
+    </div>
+
+    <h3>3. Verbi seguiti da TO oppure -ING senza cambio di significato</h3>
+    <p>Alcuni verbi possono essere seguiti da entrambe le forme senza cambiare significato:</p>
+    <p><strong>begin, continue, start</strong></p>
+
+    <div class="example">
+      You may begin <strong>writing</strong> as soon as I say so.<br>
+      You may begin <strong>to write</strong> as soon as I say so.
+    </div>
+
+    <h3>4. Verbi seguiti da TO oppure -ING con cambio di significato</h3>
+    <p>Alcuni verbi cambiano significato a seconda della struttura usata:</p>
+    <p><strong>forget, go on, remember, stop, try</strong></p>
+
+    <h3>Forget</h3>
+    <div class="example">
+      I forgot <strong>to talk</strong> to her about it.<br>
+      = Non l’ho fatto perché me ne sono dimenticato.
+    </div>
+    <div class="example">
+      I’ll never forget <strong>talking</strong> to her about it.<br>
+      = L’ho fatto e lo ricordo.
+    </div>
+
+    <h3>Go on</h3>
+    <div class="example">
+      He went on <strong>to read</strong> a book.<br>
+      = Ha cambiato azione.
+    </div>
+    <div class="example">
+      He went on <strong>reading</strong> a book.<br>
+      = Ha continuato la stessa azione.
+    </div>
+
+    <h3>Remember</h3>
+    <div class="example">
+      Please remember <strong>to switch</strong> the lights off.<br>
+      = Devi ancora farlo.
+    </div>
+    <div class="example">
+      I remember <strong>switching</strong> the lights off.<br>
+      = L’ho fatto e lo ricordo.
+    </div>
+
+    <h3>Stop</h3>
+    <div class="example">
+      I stopped <strong>asking</strong> him about his son.<br>
+      = Ho smesso di fare quella cosa.
+    </div>
+    <div class="example">
+      I stopped <strong>to ask</strong> him about his son.<br>
+      = Mi sono fermato per fare un’altra azione.
+    </div>
+
+    <h3>Try</h3>
+    <div class="example">
+      Have you tried <strong>changing</strong> your diet?<br>
+      = Hai provato come esperimento?
+    </div>
+    <div class="example">
+      Have you tried <strong>to change</strong> your diet?<br>
+      = Hai fatto uno sforzo per cambiarla?
+    </div>
+  </div>
+
+  <button class="bottom-button" onclick="showSection('home')">Torna alla home</button>
+</div>
+
+<div id="practice" class="section">
+  <h1>Pratica</h1>
 
   <div id="scoreboard">
     Corrette: <span id="correctScore">0</span> |
     Sbagliate: <span id="wrongScore">0</span> |
     Totale: <span id="totalScore">0</span> / <span id="maxQuestions">10</span>
-    <br />
+    <br>
     Percentuale: <span id="percentage">0%</span>
   </div>
 
   <div id="verb"></div>
 
-  <div class="top-buttons">
+  <div class="buttons-grid">
     <button class="top-button answer-btn" onclick="check('to')">TO + infinitive</button>
     <button class="top-button answer-btn" onclick="check('ing')">-ing</button>
     <button class="top-button answer-btn" onclick="check('both')">TO o -ing</button>
@@ -119,190 +275,206 @@
   <div id="result"></div>
   <div id="finalMessage"></div>
 
-  <script>
-    const verbs = {
-      to: ["agree","appear","choose","decide","expect","hope","learn","manage","offer","promise","refuse","seem","tend","threaten","want"],
-      ing: ["admit","avoid","bother","deny","dislike","enjoy","finish","get round to","imagine","insist on","keep (on)","mind","miss","suggest"],
-      both: ["begin","continue","start"],
-      change: ["forget","go on","remember","stop","try"]
-    };
+  <button class="bottom-button" onclick="showSection('home')">Torna alla home</button>
+</div>
 
-    const labels = {
-      to: "TO + infinitive",
-      ing: "-ing",
-      both: "TO o -ing",
-      change: "Cambio significato"
-    };
+<script>
+  function showSection(sectionId) {
+    document.querySelectorAll(".section").forEach(section => {
+      section.classList.remove("active");
+    });
 
-    const MAX_QUESTIONS = 10;
-    const NEXT_VERB_DELAY = 1400;
+    document.getElementById(sectionId).classList.add("active");
 
-    let currentVerb = "";
-    let correctCategory = "";
-    let answered = false;
-
-    let correctScore = 0;
-    let wrongScore = 0;
-    let totalAnswered = 0;
-    let gameOver = false;
-
-    function updateScoreboard() {
-      document.getElementById("correctScore").innerText = correctScore;
-      document.getElementById("wrongScore").innerText = wrongScore;
-      document.getElementById("totalScore").innerText = totalAnswered;
-      document.getElementById("maxQuestions").innerText = MAX_QUESTIONS;
-
-      const percentage = totalAnswered === 0
-        ? 0
-        : Math.round((correctScore / totalAnswered) * 100);
-
-      document.getElementById("percentage").innerText = percentage + "%";
-    }
-
-    function setAnswerButtonsDisabled(disabled) {
-      const buttons = document.querySelectorAll(".answer-btn");
-      buttons.forEach(button => button.disabled = disabled);
-    }
-
-    function getRandomVerb() {
-      const categories = Object.keys(verbs);
-      const randomCategory = categories[Math.floor(Math.random() * categories.length)];
-      const list = verbs[randomCategory];
-      const randomVerb = list[Math.floor(Math.random() * list.length)];
-
-      return {
-        verb: randomVerb,
-        category: randomCategory
-      };
-    }
-
-    function newVerb() {
-      if (gameOver) return;
-
-      const item = getRandomVerb();
-      currentVerb = item.verb;
-      correctCategory = item.category;
-      answered = false;
-
-      document.getElementById("verb").innerText = currentVerb;
-      document.getElementById("result").innerText = "";
-      document.getElementById("finalMessage").innerText = "";
-      setAnswerButtonsDisabled(false);
-    }
-
-    function check(answer) {
-      if (answered || gameOver) return;
-
-      answered = true;
-      setAnswerButtonsDisabled(true);
-
-      if (answer === correctCategory) {
-        document.getElementById("result").innerText = "😊";
-        correctScore++;
-      } else {
-        document.getElementById("result").innerText =
-          "😢 Corretto: " + labels[correctCategory];
-        wrongScore++;
-      }
-
-      totalAnswered++;
-      updateScoreboard();
-
-      if (totalAnswered >= MAX_QUESTIONS) {
-        endGame();
-      } else {
-        setTimeout(() => {
-          newVerb();
-        }, NEXT_VERB_DELAY);
-      }
-    }
-
-    function endGame() {
-      gameOver = true;
-      document.getElementById("verb").innerText = "Sessione completata";
-      document.getElementById("restartBtn").style.display = "inline-block";
-      setAnswerButtonsDisabled(true);
-
-      if (correctScore === MAX_QUESTIONS) {
-        document.getElementById("finalMessage").innerText = "Perfetto! Hai fatto 10/10! 🎉";
-        launchFireworks();
-      } else {
-        document.getElementById("finalMessage").innerText =
-          "Hai completato il quiz con " + correctScore + "/" + MAX_QUESTIONS + ".";
-      }
-    }
-
-    function restartGame() {
-      correctScore = 0;
-      wrongScore = 0;
-      totalAnswered = 0;
-      answered = false;
-      gameOver = false;
-
-      document.getElementById("result").innerText = "";
-      document.getElementById("finalMessage").innerText = "";
-      document.getElementById("restartBtn").style.display = "none";
-
-      updateScoreboard();
+    if (sectionId === "practice" && totalAnswered === 0 && !gameOver) {
       newVerb();
     }
+  }
 
-    function launchFireworks() {
-      const canvas = document.getElementById("fireworksCanvas");
-      const ctx = canvas.getContext("2d");
+  const verbs = {
+    to: ["agree","appear","choose","decide","expect","hope","learn","manage","offer","promise","refuse","seem","tend","threaten","want"],
+    ing: ["admit","avoid","bother","deny","dislike","enjoy","finish","get round to","imagine","insist on","keep (on)","mind","miss","suggest"],
+    both: ["begin","continue","start"],
+    change: ["forget","go on","remember","stop","try"]
+  };
 
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+  const labels = {
+    to: "TO + infinitive",
+    ing: "-ing",
+    both: "TO o -ing",
+    change: "Cambio significato"
+  };
 
-      let particles = [];
+  const MAX_QUESTIONS = 10;
+  const NEXT_VERB_DELAY = 1400;
 
-      for (let i = 0; i < 180; i++) {
-        particles.push({
-          x: canvas.width / 2,
-          y: canvas.height / 2,
-          radius: Math.random() * 3 + 2,
-          dx: (Math.random() - 0.5) * 10,
-          dy: (Math.random() - 0.5) * 10,
-          alpha: 1
-        });
-      }
+  let currentVerb = "";
+  let correctCategory = "";
+  let answered = false;
 
-      function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+  let correctScore = 0;
+  let wrongScore = 0;
+  let totalAnswered = 0;
+  let gameOver = false;
 
-        particles.forEach(p => {
-          p.x += p.dx;
-          p.y += p.dy;
-          p.alpha -= 0.015;
+  function updateScoreboard() {
+    document.getElementById("correctScore").innerText = correctScore;
+    document.getElementById("wrongScore").innerText = wrongScore;
+    document.getElementById("totalScore").innerText = totalAnswered;
+    document.getElementById("maxQuestions").innerText = MAX_QUESTIONS;
 
-          ctx.globalAlpha = Math.max(p.alpha, 0);
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-          ctx.fillStyle = "hsl(" + Math.random() * 360 + ", 100%, 50%)";
-          ctx.fill();
-        });
+    const percentage = totalAnswered === 0
+      ? 0
+      : Math.round((correctScore / totalAnswered) * 100);
 
-        ctx.globalAlpha = 1;
-        particles = particles.filter(p => p.alpha > 0);
+    document.getElementById("percentage").innerText = percentage + "%";
+  }
 
-        if (particles.length > 0) {
-          requestAnimationFrame(animate);
-        } else {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-      }
+  function setAnswerButtonsDisabled(disabled) {
+    document.querySelectorAll(".answer-btn").forEach(button => {
+      button.disabled = disabled;
+    });
+  }
 
-      animate();
+  function getRandomVerb() {
+    const categories = Object.keys(verbs);
+    const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+    const list = verbs[randomCategory];
+    const randomVerb = list[Math.floor(Math.random() * list.length)];
+
+    return {
+      verb: randomVerb,
+      category: randomCategory
+    };
+  }
+
+  function newVerb() {
+    if (gameOver) return;
+
+    const item = getRandomVerb();
+    currentVerb = item.verb;
+    correctCategory = item.category;
+    answered = false;
+
+    document.getElementById("verb").innerText = currentVerb;
+    document.getElementById("result").innerText = "";
+    document.getElementById("finalMessage").innerText = "";
+    setAnswerButtonsDisabled(false);
+  }
+
+  function check(answer) {
+    if (answered || gameOver) return;
+
+    answered = true;
+    setAnswerButtonsDisabled(true);
+
+    if (answer === correctCategory) {
+      document.getElementById("result").innerText = "😊";
+      correctScore++;
+    } else {
+      document.getElementById("result").innerText =
+        "😢 Corretto: " + labels[correctCategory];
+      wrongScore++;
     }
 
-    window.addEventListener("resize", () => {
-      const canvas = document.getElementById("fireworksCanvas");
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
+    totalAnswered++;
+    updateScoreboard();
+
+    if (totalAnswered >= MAX_QUESTIONS) {
+      endGame();
+    } else {
+      setTimeout(() => {
+        newVerb();
+      }, NEXT_VERB_DELAY);
+    }
+  }
+
+  function endGame() {
+    gameOver = true;
+    document.getElementById("verb").innerText = "Sessione completata";
+    document.getElementById("restartBtn").style.display = "inline-block";
+    setAnswerButtonsDisabled(true);
+
+    if (correctScore === MAX_QUESTIONS) {
+      document.getElementById("finalMessage").innerText = "Perfetto! Hai fatto 10/10! 🎉";
+      launchFireworks();
+    } else {
+      document.getElementById("finalMessage").innerText =
+        "Hai completato il quiz con " + correctScore + "/" + MAX_QUESTIONS + ".";
+    }
+  }
+
+  function restartGame() {
+    correctScore = 0;
+    wrongScore = 0;
+    totalAnswered = 0;
+    answered = false;
+    gameOver = false;
+
+    document.getElementById("result").innerText = "";
+    document.getElementById("finalMessage").innerText = "";
+    document.getElementById("restartBtn").style.display = "none";
 
     updateScoreboard();
     newVerb();
-  </script>
+  }
+
+  function launchFireworks() {
+    const canvas = document.getElementById("fireworksCanvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+
+    for (let i = 0; i < 180; i++) {
+      particles.push({
+        x: canvas.width / 2,
+        y: canvas.height / 2,
+        radius: Math.random() * 3 + 2,
+        dx: (Math.random() - 0.5) * 10,
+        dy: (Math.random() - 0.5) * 10,
+        alpha: 1
+      });
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach(p => {
+        p.x += p.dx;
+        p.y += p.dy;
+        p.alpha -= 0.015;
+
+        ctx.globalAlpha = Math.max(p.alpha, 0);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = "hsl(" + Math.random() * 360 + ", 100%, 50%)";
+        ctx.fill();
+      });
+
+      ctx.globalAlpha = 1;
+      particles = particles.filter(p => p.alpha > 0);
+
+      if (particles.length > 0) {
+        requestAnimationFrame(animate);
+      } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+
+    animate();
+  }
+
+  window.addEventListener("resize", () => {
+    const canvas = document.getElementById("fireworksCanvas");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+
+  updateScoreboard();
+</script>
+
 </body>
 </html>
