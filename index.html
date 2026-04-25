@@ -177,7 +177,6 @@
 
 <canvas id="fireworksCanvas"></canvas>
 
-<!-- HOME PRINCIPALE -->
 <div id="home" class="section active">
   <h1>English Trainer</h1>
   <p>Scegli un argomento:</p>
@@ -186,7 +185,6 @@
   <button class="menu-button" onclick="showSection('irregularMenu')">Irregular Verbs</button>
 </div>
 
-<!-- MENU TO / ING -->
 <div id="toIngMenu" class="section">
   <h1>Verbi TO / -ING</h1>
 
@@ -197,7 +195,6 @@
   <button class="bottom-button" onclick="showSection('home')">Torna alla home</button>
 </div>
 
-<!-- TEORIA TO / ING -->
 <div id="toIngTheory" class="section">
   <h1>Teoria</h1>
 
@@ -271,7 +268,6 @@
   <button class="bottom-button" onclick="showSection('toIngMenu')">Indietro</button>
 </div>
 
-<!-- PRATICA TO / ING -->
 <div id="toIngPractice" class="section">
   <h1>Pratica TO / -ING</h1>
 
@@ -300,7 +296,6 @@
   <button class="bottom-button" onclick="showSection('toIngMenu')">Indietro</button>
 </div>
 
-<!-- MENU IRREGULAR -->
 <div id="irregularMenu" class="section">
   <h1>Irregular Verbs</h1>
 
@@ -311,7 +306,6 @@
   <button class="bottom-button" onclick="showSection('home')">Torna alla home</button>
 </div>
 
-<!-- TEORIA IRREGULAR -->
 <div id="irregularTheory" class="section">
   <h1>Teoria Irregular Verbs</h1>
 
@@ -328,10 +322,6 @@
     </div>
 
     <h3>Le 3 forme</h3>
-    <p>
-      Ogni verbo irregolare ha tre forme importanti:
-    </p>
-
     <ul>
       <li><strong>Infinitive</strong>: forma base</li>
       <li><strong>Past Simple</strong>: passato semplice</li>
@@ -381,8 +371,6 @@
 
   <button class="bottom-button" onclick="showSection('irregularMenu')">Indietro</button>
 </div>
-
-<!-- PRATICA IRREGULAR -->
 <div id="irregularPractice" class="section">
   <h1>Pratica Irregular Verbs</h1>
 
@@ -430,6 +418,10 @@
     }
   }
 
+  function shuffleArray(array) {
+    return array.sort(() => Math.random() - 0.5);
+  }
+
   /* ---------------- TO / ING ---------------- */
 
   const toIngVerbs = {
@@ -452,6 +444,24 @@
   let toIngWrong = 0;
   let toIngTotal = 0;
   let toIngGameOver = false;
+  let toIngSessionVerbs = [];
+  let toIngIndex = 0;
+
+  function prepareToIngSession() {
+    toIngSessionVerbs = [];
+
+    Object.keys(toIngVerbs).forEach(category => {
+      toIngVerbs[category].forEach(verb => {
+        toIngSessionVerbs.push({
+          verb: verb,
+          category: category
+        });
+      });
+    });
+
+    shuffleArray(toIngSessionVerbs);
+    toIngIndex = 0;
+  }
 
   function updateToIngScore() {
     document.getElementById("toIngCorrect").innerText = toIngCorrect;
@@ -471,15 +481,13 @@
   function newToIngVerb() {
     if (toIngGameOver) return;
 
-    const categories = Object.keys(toIngVerbs);
-    const category = categories[Math.floor(Math.random() * categories.length)];
-    const list = toIngVerbs[category];
-    const verb = list[Math.floor(Math.random() * list.length)];
+    const item = toIngSessionVerbs[toIngIndex];
+    toIngIndex++;
 
-    toIngCurrentCategory = category;
+    toIngCurrentCategory = item.category;
     toIngAnswered = false;
 
-    document.getElementById("toIngVerb").innerText = verb;
+    document.getElementById("toIngVerb").innerText = item.verb;
     document.getElementById("toIngResult").innerText = "";
     document.getElementById("toIngFinal").innerText = "";
     setToIngButtons(false);
@@ -534,6 +542,7 @@
     document.getElementById("toIngFinal").innerText = "";
 
     updateToIngScore();
+    prepareToIngSession();
     newToIngVerb();
   }
 
@@ -577,6 +586,14 @@
   let irrTotal = 0;
   let irrAnswered = false;
   let irrGameOver = false;
+  let irregularSessionVerbs = [];
+  let irregularIndex = 0;
+
+  function prepareIrregularSession() {
+    irregularSessionVerbs = [...irregularVerbs];
+    shuffleArray(irregularSessionVerbs);
+    irregularIndex = 0;
+  }
 
   function updateIrregularScore() {
     document.getElementById("irrCorrect").innerText = irrCorrect;
@@ -590,7 +607,9 @@
   function newIrregularVerb() {
     if (irrGameOver) return;
 
-    irrCurrentVerb = irregularVerbs[Math.floor(Math.random() * irregularVerbs.length)];
+    irrCurrentVerb = irregularSessionVerbs[irregularIndex];
+    irregularIndex++;
+
     irrAnswered = false;
 
     document.getElementById("irrVerb").innerText = irrCurrentVerb.base + " → ___ → ___";
@@ -665,10 +684,9 @@
     document.getElementById("irrFinal").innerText = "";
 
     updateIrregularScore();
+    prepareIrregularSession();
     newIrregularVerb();
   }
-
-  /* ---------------- FIREWORKS ---------------- */
 
   function launchFireworks() {
     const canvas = document.getElementById("fireworksCanvas");
