@@ -223,6 +223,20 @@ const irregularVerbs = [
   { base: "win", past: "won", participle: "won" }
 ];
 
+function renderIrregularTable() {
+  const tableBody = document.getElementById("irregularTableBody");
+
+  if (!tableBody) return;
+
+  tableBody.innerHTML = irregularVerbs.map(verb => `
+    <tr>
+      <td>${verb.base}</td>
+      <td>${verb.past}</td>
+      <td>${verb.participle}</td>
+    </tr>
+  `).join("");
+}
+
 let irrCurrentVerb = null;
 let irrCorrect = 0;
 let irrWrong = 0;
@@ -389,3 +403,5 @@ window.addEventListener("resize", () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 });
+
+renderIrregularTable();
