@@ -1,0 +1,178 @@
+/* style.css */
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 30px 20px 60px;
+  background: #f5f7fb;
+  color: #222;
+}
+
+h1, h2, h3 {
+  color: #1f3c88;
+}
+
+.section {
+  display: none;
+}
+
+.active {
+  display: block;
+}
+
+.menu-button, .bottom-button, .check-button {
+  padding: 14px 24px;
+  margin: 12px;
+  font-size: 18px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  color: white;
+  min-width: 200px;
+}
+
+.menu-button {
+  background-color: #4CAF50;
+}
+
+.bottom-button {
+  background-color: #2196F3;
+  margin-top: 30px;
+}
+
+.check-button {
+  background-color: #4CAF50;
+}
+
+.theory-box, .history-box {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: left;
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  line-height: 1.6;
+}
+
+.history-box {
+  max-width: 600px;
+  margin-top: 35px;
+  text-align: center;
+}
+
+.history-card {
+  background: #eef3ff;
+  margin: 10px auto;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.example {
+  background: #eef3ff;
+  padding: 10px 14px;
+  border-left: 5px solid #1f3c88;
+  margin: 10px 0;
+}
+
+.buttons-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.top-button {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  min-height: 52px;
+}
+
+.top-button:disabled,
+.check-button:disabled {
+  background-color: #9e9e9e;
+  cursor: not-allowed;
+}
+
+.scoreboard {
+  font-size: 20px;
+  margin-bottom: 25px;
+  line-height: 1.8;
+}
+
+.big-verb {
+  font-size: 34px;
+  font-weight: bold;
+  margin: 30px 0 20px;
+  min-height: 40px;
+}
+
+.result {
+  font-size: 28px;
+  margin-top: 25px;
+  min-height: 40px;
+}
+
+.final-message {
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: 25px;
+  color: #d35400;
+  min-height: 40px;
+}
+
+input {
+  padding: 12px;
+  margin: 8px;
+  font-size: 18px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 220px;
+  text-align: center;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+
+th {
+  background: #eef3ff;
+}
+
+#restartToIngBtn,
+#restartIrregularBtn {
+  display: none;
+  background-color: #ff9800;
+}
+
+canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+}
+
+@media (max-width: 600px) {
+  .buttons-grid {
+    grid-template-columns: 1fr;
+  }
+
+  input {
+    width: 85%;
+  }
+}
