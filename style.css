@@ -176,3 +176,9 @@ canvas {
     width: 85%;
   }
 }
+
+.history-list {
+  max-height: 360px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
