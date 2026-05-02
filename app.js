@@ -238,6 +238,55 @@ function renderIrregularTable() {
   `).join("");
 }
 
+function getIrregularStats() {
+  return JSON.parse(localStorage.getItem(IRREGULAR_STATS_KEY)) || {};
+}
+
+function saveIrregularStats(stats) {
+  localStorage.setItem(IRREGULAR_STATS_KEY, JSON.stringify(stats));
+}
+
+function updateIrregularVerbStats(baseVerb, isCorrect) {
+  const stats = getIrregularStats();
+
+  if (!stats[baseVerb]) {
+    stats[baseVerb] = {
+      shown: 0,
+      errors: 0
+    };
+  }
+
+  stats[baseVerb].shown++;
+
+  if (!isCorrect) {
+    stats[baseVerb].errors++;
+  }
+
+  saveIrregularStats(stats);
+}
+
+function getSmartIrregularSession() {
+  const stats = getIrregularStats();
+
+  const weightedVerbs = irregularVerbs.map(verb => {
+    const verbStats = stats[verb.base] || { shown: 0, errors: 0 };
+
+    const priority =
+      (verbStats.errors * 3) -
+      verbStats.shown +
+      Math.random();
+
+    return {
+      ...verb,
+      priority
+    };
+  });
+
+  return weightedVerbs
+    .sort((a, b) => b.priority - a.priority)
+    .slice(0, MAX_QUESTIONS);
+}
+
 let irrCurrentVerb = null;
 let irrCorrect = 0;
 let irrWrong = 0;
@@ -248,8 +297,7 @@ let irregularSessionVerbs = [];
 let irregularIndex = 0;
 
 function prepareIrregularSession() {
-  irregularSessionVerbs = [...irregularVerbs];
-  shuffleArray(irregularSessionVerbs);
+  irregularSessionVerbs = getSmartIrregularSession();
   irregularIndex = 0;
 }
 
@@ -288,13 +336,16 @@ function checkIrregular() {
 
   const pastCorrect = pastAnswer === irrCurrentVerb.past;
   const participleCorrect = participleAnswer === irrCurrentVerb.participle;
+  const isCorrect = pastCorrect && participleCorrect;
+
+  updateIrregularVerbStats(irrCurrentVerb.base, isCorrect);
 
   irrAnswered = true;
   document.getElementById("checkIrregularBtn").disabled = true;
   document.getElementById("pastInput").disabled = true;
   document.getElementById("participleInput").disabled = true;
 
-  if (pastCorrect && participleCorrect) {
+  if (isCorrect) {
     document.getElementById("irrResult").innerText = "😊 Corretto!";
     irrCorrect++;
   } else {
