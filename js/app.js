@@ -65,19 +65,7 @@ function loadHistory(type) {
 
 /* ---------------- TO / ING ---------------- */
 
-const toIngVerbs = {
-  to: ["agree","appear","choose","decide","expect","hope","learn","manage","offer","promise","refuse","seem","tend","threaten","want"],
-  ing: ["admit","avoid","bother","deny","dislike","enjoy","finish","get round to","imagine","insist on","keep (on)","mind","miss","suggest"],
-  both: ["begin","continue","start"],
-  change: ["forget","go on","remember","stop","try"]
-};
 
-const toIngLabels = {
-  to: "TO + infinitive",
-  ing: "-ing",
-  both: "TO o -ing",
-  change: "Cambio significato"
-};
 
 let toIngCurrentCategory = "";
 let toIngAnswered = false;
@@ -189,40 +177,6 @@ function restartToIng() {
 }
 
 /* ---------------- IRREGULAR VERBS ---------------- */
-
-const irregularVerbs = [
-  { base: "break", past: "broke", participle: "broken" },
-  { base: "bring", past: "brought", participle: "brought" },
-  { base: "broadcast", past: "broadcast", participle: "broadcast" },
-  { base: "build", past: "built", participle: "built" },
-  { base: "choose", past: "chose", participle: "chosen" },
-  { base: "cost", past: "cost", participle: "cost" },
-  { base: "cut", past: "cut", participle: "cut" },
-  { base: "deal", past: "dealt", participle: "dealt" },
-  { base: "draw", past: "drew", participle: "drawn" },
-  { base: "fly", past: "flew", participle: "flown" },
-  { base: "forget", past: "forgot", participle: "forgotten" },
-  { base: "grow", past: "grew", participle: "grown" },
-  { base: "hear", past: "heard", participle: "heard" },
-  { base: "hit", past: "hit", participle: "hit" },
-  { base: "hold", past: "held", participle: "held" },
-  { base: "mean", past: "meant", participle: "meant" },
-  { base: "pay", past: "paid", participle: "paid" },
-  { base: "rise", past: "rose", participle: "risen" },
-  { base: "say", past: "said", participle: "said" },
-  { base: "shake", past: "shook", participle: "shaken" },
-  { base: "sing", past: "sang", participle: "sung" },
-  { base: "sink", past: "sank", participle: "sunk" },
-  { base: "sleep", past: "slept", participle: "slept" },
-  { base: "spend", past: "spent", participle: "spent" },
-  { base: "spill", past: "spilt", participle: "spilt" },
-  { base: "steal", past: "stole", participle: "stolen" },
-  { base: "swear", past: "swore", participle: "sworn" },
-  { base: "teach", past: "taught", participle: "taught" },
-  { base: "tell", past: "told", participle: "told" },
-  { base: "wear", past: "wore", participle: "worn" },
-  { base: "win", past: "won", participle: "won" }
-];
 
 function renderIrregularTable() {
   const tableBody = document.getElementById("irregularTableBody");
