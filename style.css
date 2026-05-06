@@ -182,3 +182,14 @@ canvas {
   overflow-y: auto;
   padding-right: 8px;
 }
+
+#restartReportingBtn {
+  display: none;
+  background-color: #ff9800;
+}
+
+.history-list {
+  max-height: 360px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
