@@ -17,6 +17,7 @@
   <p>Scegli un argomento:</p>
   <button class="menu-button" onclick="showSection('toIngMenu')">Verbi TO / -ING</button>
   <button class="menu-button" onclick="showSection('irregularMenu')">Irregular Verbs</button>
+  <button class="menu-button" onclick="showSection('reportingMenu')">Reporting Verbs</button>
 </div>
 
 <div id="toIngMenu" class="section">
@@ -181,8 +182,102 @@
   <button class="bottom-button" onclick="showSection('irregularMenu')">Indietro</button>
 </div>
 
+<div id="reportingMenu" class="section">
+  <h1>Reporting Verbs</h1>
+
+  <button class="menu-button" onclick="showSection('reportingTheory')">Teoria</button>
+  <button class="menu-button" onclick="showSection('reportingPractice')">Pratica</button>
+
+  <br>
+  <button class="bottom-button" onclick="showSection('home')">Torna alla home</button>
+</div>
+
+<div id="reportingTheory" class="section">
+  <h1>Teoria Reporting Verbs</h1>
+
+  <div class="theory-box">
+    <h2>Reporting Verbs</h2>
+
+    <h3>1. Verb + (that) clause</h3>
+    <p>
+      Alcuni verbi possono essere seguiti da una frase introdotta da <strong>that</strong>.
+    </p>
+    <p><strong>mention, insist, explain, reply, complain, claim</strong></p>
+
+    <div class="example">
+      He explained <strong>that</strong> he was tired.
+    </div>
+
+    <h3>2. Verb + -ing</h3>
+    <p>
+      Alcuni reporting verbs sono seguiti da un verbo in forma <strong>-ing</strong>.
+    </p>
+    <p><strong>recall, admit, deny, recommend, suggest</strong></p>
+
+    <div class="example">
+      He admitted <strong>breaking</strong> the window.
+    </div>
+
+    <h3>3. Verb + object + to + infinitive</h3>
+    <p>
+      Alcuni verbi richiedono un oggetto prima di <strong>to + infinitive</strong>.
+    </p>
+    <p><strong>tell, remind, persuade, order, invite, forbid, beg, ask, warn</strong></p>
+
+    <div class="example">
+      She reminded me <strong>to call</strong> him.
+    </div>
+
+    <h3>4. Verb + to + infinitive</h3>
+    <p>
+      Alcuni verbi sono seguiti direttamente da <strong>to + infinitive</strong>.
+    </p>
+    <p><strong>threaten, refuse, promise, offer, decide, agree</strong></p>
+
+    <div class="example">
+      He promised <strong>to help</strong> me.
+    </div>
+  </div>
+
+  <button class="bottom-button" onclick="showSection('reportingMenu')">Indietro</button>
+</div>
+
+<div id="reportingPractice" class="section">
+  <h1>Pratica Reporting Verbs</h1>
+
+  <div class="scoreboard">
+    Corrette: <span id="reportingCorrect">0</span> |
+    Sbagliate: <span id="reportingWrong">0</span> |
+    Totale: <span id="reportingTotal">0</span> / 10
+    <br>
+    Percentuale: <span id="reportingPercentage">0%</span>
+  </div>
+
+  <div id="reportingVerb" class="big-verb"></div>
+
+  <div class="buttons-grid">
+    <button class="top-button reportingAnswer" onclick="checkReporting('that')">(that) + clause</button>
+    <button class="top-button reportingAnswer" onclick="checkReporting('ing')">verb + -ing</button>
+    <button class="top-button reportingAnswer" onclick="checkReporting('toObject')">object + to + infinitive</button>
+    <button class="top-button reportingAnswer" onclick="checkReporting('toInfinitive')">to + infinitive</button>
+  </div>
+
+  <button id="restartReportingBtn" class="bottom-button" onclick="restartReporting()">Ricomincia</button>
+
+  <div id="reportingResult" class="result"></div>
+  <div id="reportingFinal" class="final-message"></div>
+
+  <div class="history-box">
+    <h3>Storico Reporting Verbs</h3>
+    <div id="reportingHistory" class="history-list"></div>
+  </div>
+
+  <button class="bottom-button" onclick="showSection('reportingMenu')">Indietro</button>
+</div>
+
 <script src="js/data-to-ing.js"></script>
 <script src="js/data-irregular.js"></script>
+<script src="js/data-to-ing.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
