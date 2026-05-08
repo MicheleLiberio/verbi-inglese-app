@@ -1,4 +1,4 @@
-io function renderIrregularTable() {
+function renderIrregularTable() {
   const tableBody = document.getElementById("irregularTableBody");
 
   if (!tableBody) return;
