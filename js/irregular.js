@@ -1,4 +1,4 @@
-function renderIrregularTable() {
+io function renderIrregularTable() {
   const tableBody = document.getElementById("irregularTableBody");
 
   if (!tableBody) return;
@@ -46,8 +46,8 @@ function loadIrregularReviewStats() {
   if (!container) return;
 
   const verbsStats = Object.keys(stats).map(baseVerb => {
-    const shown = stats[baseVerb].shown;
-    const errors = stats[baseVerb].errors;
+    const shown = Number(stats[baseVerb].shown) || 0;
+    const errors = Number(stats[baseVerb].errors) || 0;
     const correct = shown - errors;
     const percentage = shown === 0 ? 0 : Math.round((correct / shown) * 100);
 
@@ -69,7 +69,12 @@ function loadIrregularReviewStats() {
     .slice(0, 10);
 
   if (filtered.length === 0) {
-    container.innerHTML = "<p>Nessun dato disponibile.</p>";
+    container.innerHTML = `
+      <p>
+        Nessun dato disponibile.<br>
+        Completa alcune sessioni per vedere i verbi da ripassare.
+      </p>
+    `;
     return;
   }
 
