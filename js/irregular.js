@@ -16,6 +16,52 @@ function getIrregularStats() {
   return JSON.parse(localStorage.getItem(IRREGULAR_STATS_KEY)) || {};
 }
 
+function loadIrregularReviewStats() {
+  const stats = getIrregularStats();
+  const container = document.getElementById("irregularReviewStats");
+
+  if (!container) return;
+
+  const verbsStats = Object.keys(stats).map(baseVerb => {
+    const shown = stats[baseVerb].shown;
+    const errors = stats[baseVerb].errors;
+    const correct = shown - errors;
+    const percentage = shown === 0 ? 0 : Math.round((correct / shown) * 100);
+
+    return {
+      baseVerb,
+      shown,
+      errors,
+      correct,
+      percentage
+    };
+  });
+
+  const filtered = verbsStats
+    .filter(item => item.shown > 0)
+    .sort((a, b) => {
+      if (b.errors !== a.errors) return b.errors - a.errors;
+      return a.percentage - b.percentage;
+    })
+    .slice(0, 10);
+
+  if (filtered.length === 0) {
+    container.innerHTML = "<p>Nessun dato disponibile.</p>";
+    return;
+  }
+
+  container.innerHTML = filtered.map(item => `
+    <div class="history-card">
+      <strong>${item.baseVerb}</strong>
+      <br>
+      Corrette: ${item.correct} |
+      Errori: ${item.errors}
+      <br>
+      Percentuale: ${item.percentage}%
+    </div>
+  `).join("");
+}
+
 function saveIrregularStats(stats) {
   localStorage.setItem(IRREGULAR_STATS_KEY, JSON.stringify(stats));
 }
