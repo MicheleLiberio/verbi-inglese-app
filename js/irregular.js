@@ -16,6 +16,29 @@ function getIrregularStats() {
   return JSON.parse(localStorage.getItem(IRREGULAR_STATS_KEY)) || {};
 }
 
+function saveIrregularStats(stats) {
+  localStorage.setItem(IRREGULAR_STATS_KEY, JSON.stringify(stats));
+}
+
+function updateIrregularVerbStats(baseVerb, isCorrect) {
+  const stats = getIrregularStats();
+
+  if (!stats[baseVerb]) {
+    stats[baseVerb] = {
+      shown: 0,
+      errors: 0
+    };
+  }
+
+  stats[baseVerb].shown++;
+
+  if (!isCorrect) {
+    stats[baseVerb].errors++;
+  }
+
+  saveIrregularStats(stats);
+}
+
 function loadIrregularReviewStats() {
   const stats = getIrregularStats();
   const container = document.getElementById("irregularReviewStats");
@@ -62,29 +85,6 @@ function loadIrregularReviewStats() {
   `).join("");
 }
 
-function saveIrregularStats(stats) {
-  localStorage.setItem(IRREGULAR_STATS_KEY, JSON.stringify(stats));
-}
-
-function updateIrregularVerbStats(baseVerb, isCorrect) {
-  const stats = getIrregularStats();
-
-  if (!stats[baseVerb]) {
-    stats[baseVerb] = {
-      shown: 0,
-      errors: 0
-    };
-  }
-
-  stats[baseVerb].shown++;
-
-  if (!isCorrect) {
-    stats[baseVerb].errors++;
-  }
-
-  saveIrregularStats(stats);
-}
-
 function getSmartIrregularSession() {
   const stats = getIrregularStats();
 
@@ -126,7 +126,10 @@ function updateIrregularScore() {
   document.getElementById("irrWrong").innerText = irrWrong;
   document.getElementById("irrTotal").innerText = irrTotal;
 
-  const percentage = irrTotal === 0 ? 0 : Math.round((irrCorrect / irrTotal) * 100);
+  const percentage = irrTotal === 0
+    ? 0
+    : Math.round((irrCorrect / irrTotal) * 100);
+
   document.getElementById("irrPercentage").innerText = percentage + "%";
 }
 
@@ -137,14 +140,18 @@ function newIrregularVerb() {
   irregularIndex++;
   irrAnswered = false;
 
-  document.getElementById("irrVerb").innerText = irrCurrentVerb.base + " → ___ → ___";
+  document.getElementById("irrVerb").innerText =
+    irrCurrentVerb.base + " → ___ → ___";
+
   document.getElementById("pastInput").value = "";
   document.getElementById("participleInput").value = "";
   document.getElementById("irrResult").innerText = "";
   document.getElementById("irrFinal").innerText = "";
+
   document.getElementById("checkIrregularBtn").disabled = false;
   document.getElementById("pastInput").disabled = false;
   document.getElementById("participleInput").disabled = false;
+
   document.getElementById("pastInput").focus();
 }
 
@@ -161,6 +168,7 @@ function checkIrregular() {
   updateIrregularVerbStats(irrCurrentVerb.base, isCorrect);
 
   irrAnswered = true;
+
   document.getElementById("checkIrregularBtn").disabled = true;
   document.getElementById("pastInput").disabled = true;
   document.getElementById("participleInput").disabled = true;
@@ -170,7 +178,13 @@ function checkIrregular() {
     irrCorrect++;
   } else {
     document.getElementById("irrResult").innerText =
-      "😢 Corretto: " + irrCurrentVerb.base + " → " + irrCurrentVerb.past + " → " + irrCurrentVerb.participle;
+      "😢 Corretto: " +
+      irrCurrentVerb.base +
+      " → " +
+      irrCurrentVerb.past +
+      " → " +
+      irrCurrentVerb.participle;
+
     irrWrong++;
   }
 
@@ -189,18 +203,22 @@ function endIrregularGame() {
 
   saveHistory("irregular", irrCorrect, irrWrong, MAX_QUESTIONS);
   loadHistory("irregular");
+  loadIrregularReviewStats();
 
   document.getElementById("irrVerb").innerText = "Sessione completata";
   document.getElementById("restartIrregularBtn").style.display = "inline-block";
+
   document.getElementById("checkIrregularBtn").disabled = true;
   document.getElementById("pastInput").disabled = true;
   document.getElementById("participleInput").disabled = true;
 
   if (irrCorrect === MAX_QUESTIONS) {
-    document.getElementById("irrFinal").innerText = "Perfetto! Hai fatto 10/10! 🎉";
+    document.getElementById("irrFinal").innerText =
+      "Perfetto! Hai fatto 10/10! 🎉";
     launchFireworks();
   } else {
-    document.getElementById("irrFinal").innerText = "Hai completato il quiz con " + irrCorrect + "/10.";
+    document.getElementById("irrFinal").innerText =
+      "Hai completato il quiz con " + irrCorrect + "/10.";
   }
 }
 
