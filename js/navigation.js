@@ -13,6 +13,7 @@ function showSection(sectionId) {
   if (sectionId === "irregularPractice") {
     restartIrregular();
     loadHistory("irregular");
+    loadIrregularReviewStats();
   }
 
   if (sectionId === "reportingPractice") {
