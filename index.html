@@ -18,6 +18,7 @@
   <button class="menu-button" onclick="showSection('toIngMenu')">Verbi TO / -ING</button>
   <button class="menu-button" onclick="showSection('irregularMenu')">Irregular Verbs</button>
   <button class="menu-button" onclick="showSection('reportingMenu')">Reporting Verbs</button>
+  <button class="menu-button" onclick="showSection('vocabularyMenu')">Vocabulary Trainer</button>
 </div>
 
 <div id="toIngMenu" class="section">
@@ -361,6 +362,26 @@
   </div>
 
   <button class="bottom-button" onclick="showSection('reportingMenu')">Indietro</button>
+</div>
+<div id="vocabularyMenu" class="section">
+  <h1>Vocabulary Trainer</h1>
+
+  <div class="theory-box">
+    <h2>Accesso</h2>
+
+    <input id="authEmail" type="email" placeholder="Email">
+    <input id="authPassword" type="password" placeholder="Password">
+
+    <br>
+
+    <button class="menu-button" onclick="signUp()">Registrati</button>
+    <button class="menu-button" onclick="signIn()">Login</button>
+    <button class="bottom-button" onclick="signOut()">Logout</button>
+
+    <div id="authMessage" class="result"></div>
+  </div>
+
+  <button class="bottom-button" onclick="showSection('home')">Torna alla home</button>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-config.js"></script>
