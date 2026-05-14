@@ -362,11 +362,18 @@
 
   <button class="bottom-button" onclick="showSection('reportingMenu')">Indietro</button>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script>
+  const supabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+</script>
+<script src="js/config.js"></script>
 <script src="js/data-to-ing.js"></script>
 <script src="js/data-irregular.js"></script>
 <script src="js/data-reporting.js"></script>
-
-<script src="js/config.js"></script>
 <script src="js/utils.js"></script>
 <script src="js/storage.js"></script>
 <script src="js/fireworks.js"></script>
