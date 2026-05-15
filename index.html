@@ -374,7 +374,7 @@
 
     <br>
 
-    <button class="menu-button" onclick="signUp()">Registrati</button>
+    <!--<button class="menu-button" onclick="signUp()">Registrati</button>-->
     <button class="menu-button" onclick="signIn()">Login</button>
     <button class="bottom-button" onclick="signOut()">Logout</button>
 
@@ -386,7 +386,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-config.js"></script>
 <script>
-  const supabase = window.supabase.createClient(
+  const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY
   );
