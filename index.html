@@ -365,22 +365,26 @@
 </div>
 <div id="vocabularyMenu" class="section">
   <h1>Vocabulary Trainer</h1>
-
-  <div class="theory-box">
+  <div id="authBox" class="theory-box">
     <h2>Accesso</h2>
-
     <input id="authEmail" type="email" placeholder="Email">
     <input id="authPassword" type="password" placeholder="Password">
-
     <br>
-
     <!--<button class="menu-button" onclick="signUp()">Registrati</button>-->
     <button class="menu-button" onclick="signIn()">Login</button>
     <button class="bottom-button" onclick="signOut()">Logout</button>
-
     <div id="authMessage" class="result"></div>
   </div>
-
+  <div id="vocabularyApp" class="theory-box" style="display:none;">
+    <h2>Aggiungi parola</h2>
+    <input id="italianWord" placeholder="Italiano">
+    <input id="englishWord" placeholder="Inglese">
+    <br>
+    <button class="menu-button" onclick="addVocabularyWord()">Salva parola</button>
+    <div id="vocabularyMessage" class="result"></div>
+    <h3>Le mie parole</h3>
+    <div id="vocabularyList"></div>
+  </div>
   <button class="bottom-button" onclick="showSection('home')">Torna alla home</button>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

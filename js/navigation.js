@@ -20,4 +20,8 @@ function showSection(sectionId) {
     restartReporting();
     loadHistory("reporting");
   }
+
+  if (sectionId === "vocabularyMenu") {
+    refreshVocabularyUI();
+  }
 }
