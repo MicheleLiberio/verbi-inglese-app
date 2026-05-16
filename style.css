@@ -222,3 +222,19 @@ canvas {
   background-color: #e74c3c;
   color: white;
 }
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+  align-items: center;
+}
+
+.auth-form input {
+  width: 260px;
+}
+
+.auth-form button {
+  width: 260px;
+}

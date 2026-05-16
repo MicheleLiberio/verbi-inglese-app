@@ -12,13 +12,42 @@
 
 <canvas id="fireworksCanvas"></canvas>
 
-<div id="home" class="section active">
+<div id="loginPage" class="section active">
+  <h1>English Trainer</h1>
+  <p>Accedi per usare l’app</p>
+  <div id="authBox" class="theory-box">
+  <div class="auth-form">
+    <input
+      id="authEmail"
+      type="email"
+      placeholder="Email"
+    >
+    <input
+      id="authPassword"
+      type="password"
+      placeholder="Password"
+    >
+    <button
+      class="menu-button"
+      onclick="signIn()"
+    >
+      Login
+    </button>
+  </div>
+  <div id="authMessage" class="result"></div>
+</div>
+</div>
+<div id="home" class="section">
   <h1>English Trainer</h1>
   <p>Scegli un argomento:</p>
   <button class="menu-button" onclick="showSection('toIngMenu')">Verbi TO / -ING</button>
   <button class="menu-button" onclick="showSection('irregularMenu')">Irregular Verbs</button>
   <button class="menu-button" onclick="showSection('reportingMenu')">Reporting Verbs</button>
   <button class="menu-button" onclick="showSection('vocabularyMenu')">Vocabulary Trainer</button>
+  <br>
+  <button class="bottom-button logout-button" onclick="signOut()">
+    Logout
+  </button>
 </div>
 
 <div id="toIngMenu" class="section">
@@ -89,6 +118,8 @@
     <button class="top-button toIngAnswer" onclick="checkToIng('ing')">-ing</button>
     <button class="top-button toIngAnswer" onclick="checkToIng('both')">TO o -ing</button>
     <button class="top-button toIngAnswer" onclick="checkToIng('change')">Cambio significato</button>
+    <br>
+    <button class="bottom-button" onclick="signOut()">Logout</button>
   </div>
 
   <button id="restartToIngBtn" class="bottom-button" onclick="restartToIng()">Ricomincia</button>
@@ -107,8 +138,6 @@
   <h1>Irregular Verbs</h1>
   <button class="menu-button" onclick="showSection('irregularTheory')">Teoria</button>
   <button class="menu-button" onclick="showSection('irregularPractice')">Pratica</button>
-  <br>
-  <button class="bottom-button" onclick="showSection('home')">Torna alla home</button>
 </div>
 
 <div id="irregularTheory" class="section">

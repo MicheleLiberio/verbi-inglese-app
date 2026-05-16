@@ -35,20 +35,19 @@ async function signIn() {
     return;
   }
 
-  document.getElementById("authMessage").innerText = "Login effettuato.";
-  refreshVocabularyUI();
+  document.getElementById("authMessage").innerText = "";
+  showSection("home");
 }
 
 async function signOut() {
   const { error } = await supabaseClient.auth.signOut();
 
   if (error) {
-    document.getElementById("authMessage").innerText = "Errore: " + error.message;
+    alert("Errore: " + error.message);
     return;
   }
 
-  document.getElementById("authMessage").innerText = "Logout effettuato.";
-  refreshVocabularyUI();
+  showSection("loginPage");
 }
 
 async function addVocabularyWord() {
@@ -167,4 +166,14 @@ async function deleteVocabularyWord(id) {
 
   document.getElementById("vocabularyMessage").innerText = "Parola cancellata.";
   loadVocabularyWords();
+}
+
+async function checkInitialAuth() {
+  const user = await getCurrentUser();
+
+  if (user) {
+    showSection("home");
+  } else {
+    showSection("loginPage");
+  }
 }
