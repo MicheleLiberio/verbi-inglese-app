@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>English Trainer</title>
   <link rel="stylesheet" href="style.css">
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+  />
 </head>
 
 <body>
@@ -394,27 +398,60 @@
 </div>
 <div id="vocabularyMenu" class="section">
   <h1>Vocabulary Trainer</h1>
-  <!--<div id="authBox" class="theory-box">
-    <h2>Accesso</h2>
-    <input id="authEmail" type="email" placeholder="Email">
-    <input id="authPassword" type="password" placeholder="Password">
-    <br>
-    <button class="menu-button" onclick="signUp()">Registrati</button>
-    <button class="menu-button" onclick="signIn()">Login</button>
-    <button class="bottom-button" onclick="signOut()">Logout</button>
-    <div id="authMessage" class="result"></div>
-  </div>-->
-  <div id="vocabularyApp" class="theory-box" style="display:none;">
-    <h2>Aggiungi parola</h2>
-    <input id="italianWord" placeholder="Italiano">
-    <input id="englishWord" placeholder="Inglese">
-    <br>
-    <button class="menu-button" onclick="addVocabularyWord()">Salva parola</button>
-    <div id="vocabularyMessage" class="result"></div>
+
+  <div class="theory-box">
+
+    <div class="vocabulary-topbar">
+    <input
+      id="vocabularySearch"
+      placeholder="Cerca parola..."
+      oninput="filterVocabularyWords()"
+    >
+
+      <div>
+        <button class="menu-button" onclick="addVocabularyWord()">
+        + Aggiungi
+        </button>
+
+        <button class="bottom-button">
+          Storico
+        </button>
+      </div>
+      
+    </div>
+
+    <!--<div class="vocabulary-add-form">
+      <input id="italianWord" placeholder="Italiano">
+      <input id="englishWord" placeholder="Inglese">
+    </div>-->
+
+    <!--<div id="vocabularyMessage" class="result"></div>-->
+
     <h3>Le mie parole</h3>
-    <div id="vocabularyList"></div>
+    <div id="vocabularyList" class="history-list"></div>
+
+    <button class="menu-button" onclick="showSection('vocabularyPractice')">
+      Pratica
+    </button>
+
   </div>
-  <button class="bottom-button" onclick="showSection('home')">Torna alla home</button>
+
+  <button class="bottom-button" onclick="showSection('home')">
+    Torna alla home
+  </button>
+</div>
+
+<div id="vocabularyPractice" class="section">
+  <h1>Pratica Vocabulary</h1>
+
+  <div class="theory-box">
+    <p>Qui inseriremo la pratica con:</p>
+    <p><strong>Verifica → OK / KO</strong></p>
+  </div>
+
+  <button class="bottom-button" onclick="showSection('vocabularyMenu')">
+    Indietro
+  </button>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-config.js"></script>

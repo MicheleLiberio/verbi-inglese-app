@@ -24,4 +24,8 @@ function showSection(sectionId) {
   if (sectionId === "vocabularyMenu") {
     refreshVocabularyUI();
   }
+
+  if (sectionId === "vocabularyMenu") {
+    loadVocabularyWords();
+  }
 }

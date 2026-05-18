@@ -86,6 +86,8 @@ async function addVocabularyWord() {
   loadVocabularyWords();
 }
 
+let vocabularyWords = [];
+
 async function loadVocabularyWords() {
   const { data, error } = await supabaseClient
     .from("vocabulary_words")
@@ -101,28 +103,64 @@ async function loadVocabularyWords() {
     return;
   }
 
-  if (!data || data.length === 0) {
+  vocabularyWords = data || [];
+
+  if (vocabularyWords.length === 0) {    
     container.innerHTML = "<p>Nessuna parola salvata.</p>";
     return;
   }
 
-  container.innerHTML = data.map(word => `
-    <div class="history-card">
-      <strong>${word.italian}</strong> → ${word.english}
-      <br>
+  renderVocabularyList(vocabularyWords);
+}
+
+function renderVocabularyList(words) {
+  const container = document.getElementById("vocabularyList");
+
+  if (!container) return;
+
+  container.innerHTML = words.map(word => `
+    <div class="history-card vocabulary-card">
+
+      <div class="vocabulary-word">
+        <strong>${word.italian}</strong> → ${word.english}
+      </div>
+
       <div class="vocabulary-actions">
-        <button class="icon-button edit-button"
+        <button
+          class="icon-button edit-button"
           onclick="editVocabularyWord('${word.id}', '${word.italian}', '${word.english}')">
-          ✏️
+          <i class="bi bi-pencil"></i>
         </button>
 
-        <button class="icon-button delete-button"
+        <button
+          class="icon-button delete-button"
           onclick="deleteVocabularyWord('${word.id}')">
-          🗑️
+          <i class="bi bi-trash"></i>
         </button>
       </div>
+
     </div>
   `).join("");
+}
+
+function filterVocabularyWords() {
+  const search = document
+    .getElementById("vocabularySearch")
+    .value
+    .trim()
+    .toLowerCase();
+
+  if (search.length < 3) {
+    renderVocabularyList(vocabularyWords);
+    return;
+  }
+
+  const filtered = vocabularyWords.filter(word =>
+    word.italian.toLowerCase().includes(search) ||
+    word.english.toLowerCase().includes(search)
+  );
+
+  renderVocabularyList(filtered);
 }
 
 async function editVocabularyWord(id, oldItalian, oldEnglish) {
