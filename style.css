@@ -362,3 +362,28 @@ canvas {
   min-width: 200px;
   background-color: #e74c3c;
 }
+
+button {
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    filter 0.2s ease;
+
+  cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(0.70);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.menu-button {
+  background-color: #2ecc71;
+}
+
+.bottom-button {
+  background-color: #3498db;
+}
