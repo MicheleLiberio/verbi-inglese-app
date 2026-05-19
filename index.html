@@ -453,6 +453,32 @@
     Indietro
   </button>
 </div>
+<div id="editVocabularyModal" class="modal-overlay">
+  <div class="modal-box">
+    <h2>Modifica parola</h2>
+
+    <input id="editItalianWord" placeholder="Italiano">
+    <input id="editEnglishWord" placeholder="Inglese">
+
+    <div class="modal-actions">
+      <button class="bottom-button" onclick="closeEditVocabularyModal()">Annulla</button>
+      <button class="menu-button" onclick="confirmEditVocabularyWord()">Conferma</button>
+    </div>
+  </div>
+</div>
+
+<div id="deleteVocabularyModal" class="modal-overlay">
+  <div class="modal-box">
+    <h2>Conferma cancellazione</h2>
+
+    <p>Vuoi davvero cancellare questa parola?</p>
+
+    <div class="modal-actions">
+      <button class="bottom-button" onclick="closeDeleteVocabularyModal()">Annulla</button>
+      <button class="delete-confirm-button" onclick="confirmDeleteVocabularyWord()">Cancella</button>
+    </div>
+  </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-config.js"></script>
 <script>

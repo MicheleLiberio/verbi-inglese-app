@@ -1,3 +1,6 @@
+let editingVocabularyId = null;
+let deletingVocabularyId = null;
+
 async function getCurrentUser() {
   const { data } = await supabaseClient.auth.getUser();
   return data.user;
@@ -163,46 +166,80 @@ function filterVocabularyWords() {
   renderVocabularyList(filtered);
 }
 
-async function editVocabularyWord(id, oldItalian, oldEnglish) {
-  const italian = prompt("Modifica italiano:", oldItalian);
-  const english = prompt("Modifica inglese:", oldEnglish);
+function editVocabularyWord(id, oldItalian, oldEnglish) {
+  editingVocabularyId = id;
 
-  if (!italian || !english) return;
+  document.getElementById("editItalianWord").value = oldItalian;
+  document.getElementById("editEnglishWord").value = oldEnglish;
+
+  document.getElementById("editVocabularyModal").style.display = "flex";
+}
+
+function closeEditVocabularyModal() {
+  editingVocabularyId = null;
+  document.getElementById("editVocabularyModal").style.display = "none";
+}
+
+async function confirmEditVocabularyWord() {
+  if (!editingVocabularyId) return;
+
+  const italian = document.getElementById("editItalianWord").value.trim();
+  const english = document.getElementById("editEnglishWord").value.trim();
+
+  if (!italian || !english) {
+    document.getElementById("vocabularyMessage").innerText =
+      "Inserisci entrambe le parole.";
+    return;
+  }
 
   const { error } = await supabaseClient
     .from("vocabulary_words")
     .update({
-      italian: italian.trim(),
-      english: english.trim(),
+      italian,
+      english,
       updated_at: new Date().toISOString()
     })
-    .eq("id", id);
+    .eq("id", editingVocabularyId);
 
   if (error) {
-    document.getElementById("vocabularyMessage").innerText = "Errore: " + error.message;
+    document.getElementById("vocabularyMessage").innerText =
+      "Errore: " + error.message;
     return;
   }
 
   document.getElementById("vocabularyMessage").innerText = "Parola modificata.";
+
+  closeEditVocabularyModal();
   loadVocabularyWords();
 }
 
-async function deleteVocabularyWord(id) {
-  const confirmDelete = confirm("Vuoi davvero cancellare questa parola?");
+function deleteVocabularyWord(id) {
+  deletingVocabularyId = id;
+  document.getElementById("deleteVocabularyModal").style.display = "flex";
+}
 
-  if (!confirmDelete) return;
+function closeDeleteVocabularyModal() {
+  deletingVocabularyId = null;
+  document.getElementById("deleteVocabularyModal").style.display = "none";
+}
+
+async function confirmDeleteVocabularyWord() {
+  if (!deletingVocabularyId) return;
 
   const { error } = await supabaseClient
     .from("vocabulary_words")
     .delete()
-    .eq("id", id);
+    .eq("id", deletingVocabularyId);
 
   if (error) {
-    document.getElementById("vocabularyMessage").innerText = "Errore: " + error.message;
+    document.getElementById("vocabularyMessage").innerText =
+      "Errore: " + error.message;
     return;
   }
 
   document.getElementById("vocabularyMessage").innerText = "Parola cancellata.";
+
+  closeDeleteVocabularyModal();
   loadVocabularyWords();
 }
 

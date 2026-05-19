@@ -308,3 +308,57 @@ canvas {
 .delete-button {
   background-color: #e74c3c;
 }
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-box {
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 420px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.modal-box input {
+  width: 85%;
+  margin: 10px auto;
+  display: block;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.modal-actions button {
+  flex: 1;
+}
+
+.modal-actions .bottom-button {
+  margin-top: 12px;
+}
+
+.delete-confirm-button {
+  padding: 14px 24px;
+  margin: 12px;
+  font-size: 18px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  color: white;
+  min-width: 200px;
+  background-color: #e74c3c;
+}
