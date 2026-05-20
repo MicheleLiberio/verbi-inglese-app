@@ -481,6 +481,25 @@
     </div>
   </div>
 </div>
+<div id="vocabularyDetailModal" class="modal-overlay">
+  <div class="modal-box modal-box-relative">
+
+    <button class="modal-close-button" onclick="closeVocabularyDetailModal()">
+      ×
+    </button>
+
+    <h2 id="detailEnglishWord"></h2>
+    <p id="detailItalianWord"></p>
+
+    <div id="detailVocabularyStats"></div>
+
+    <div class="modal-actions">
+      <button class="menu-button" onclick="editSelectedVocabularyWord()">Modifica</button>
+      <button class="delete-confirm-button" onclick="deleteSelectedVocabularyWord()">Cancella</button>
+    </div>
+
+  </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-config.js"></script>
 <script>

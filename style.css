@@ -387,3 +387,62 @@ button:active {
 .bottom-button {
   background-color: #3498db;
 }
+
+.vocabulary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.vocabulary-tile {
+  background: white;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  cursor: pointer;
+  text-align: left;
+  transition: 0.2s ease;
+}
+
+.vocabulary-tile:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+.vocabulary-tile-english {
+  font-size: 20px;
+  font-weight: bold;
+  color: #1f3c88;
+}
+
+.vocabulary-tile-italian {
+  margin-top: 6px;
+  font-size: 16px;
+  color: #444;
+}
+
+.vocabulary-tile-stats {
+  margin-top: 14px;
+  font-size: 13px;
+  color: #666;
+}
+
+.modal-box-relative {
+  position: relative;
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: #eef3ff;
+  color: #1f3c88;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}

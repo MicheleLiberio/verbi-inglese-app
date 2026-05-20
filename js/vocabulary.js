@@ -1,5 +1,6 @@
 let editingVocabularyId = null;
 let deletingVocabularyId = null;
+let selectedVocabularyWord = null;
 
 async function getCurrentUser() {
   const { data } = await supabaseClient.auth.getUser();
@@ -121,29 +122,81 @@ function renderVocabularyList(words) {
 
   if (!container) return;
 
-  container.innerHTML = words.map(word => `
-    <div class="history-card vocabulary-card">
+  if (!words || words.length === 0) {
+    container.innerHTML = "<p>Nessuna parola trovata.</p>";
+    return;
+  }
 
-      <div class="vocabulary-word">
-        <strong>${word.italian}</strong> → ${word.english}
-      </div>
+  container.innerHTML = `
+    <div class="vocabulary-grid">
+      ${words.map(word => {
+        const shown = Number(word.shown) || 0;
+        const ok = Number(word.ok_count) || 0;
+        const ko = Number(word.ko_count) || 0;
 
-      <div class="vocabulary-actions">
-        <button
-          class="icon-button edit-button"
-          onclick="editVocabularyWord('${word.id}', '${word.italian}', '${word.english}')">
-          <i class="bi bi-pencil"></i>
-        </button>
-
-        <button
-          class="icon-button delete-button"
-          onclick="deleteVocabularyWord('${word.id}')">
-          <i class="bi bi-trash"></i>
-        </button>
-      </div>
-
+        return `
+          <div class="vocabulary-tile" onclick="openVocabularyDetailModal('${word.id}')">
+            <div class="vocabulary-tile-english">${word.english}</div>
+            <div class="vocabulary-tile-italian">${word.italian}</div>
+            <div class="vocabulary-tile-stats">
+              Ripassi: ${shown} | OK: ${ok} | KO: ${ko}
+            </div>
+          </div>
+        `;
+      }).join("")}
     </div>
-  `).join("");
+  `;
+}
+
+function openVocabularyDetailModal(id) {
+  selectedVocabularyWord = vocabularyWords.find(
+    word => String(word.id) === String(id)
+  );
+
+  if (!selectedVocabularyWord) return;
+
+  const shown = Number(selectedVocabularyWord.shown) || 0;
+  const ok = Number(selectedVocabularyWord.ok_count) || 0;
+  const ko = Number(selectedVocabularyWord.ko_count) || 0;
+
+  document.getElementById("detailEnglishWord").innerText = selectedVocabularyWord.english;
+  document.getElementById("detailItalianWord").innerText = selectedVocabularyWord.italian;
+
+  document.getElementById("detailVocabularyStats").innerHTML = `
+    <p>Ripassi: <strong>${shown}</strong></p>
+    <p>OK: <strong>${ok}</strong> | KO: <strong>${ko}</strong></p>
+  `;
+
+  document.getElementById("vocabularyDetailModal").style.display = "flex";
+}
+
+function closeVocabularyDetailModal() {
+  selectedVocabularyWord = null;
+  document.getElementById("vocabularyDetailModal").style.display = "none";
+}
+
+function editSelectedVocabularyWord() {
+  if (!selectedVocabularyWord) return;
+
+  const wordToEdit = selectedVocabularyWord;
+
+  closeVocabularyDetailModal();
+
+  editVocabularyWord(
+    wordToEdit.id,
+    wordToEdit.italian,
+    wordToEdit.english
+  );
+}
+
+function deleteSelectedVocabularyWord() {
+  if (!selectedVocabularyWord) return;
+
+  const wordToDelete = selectedVocabularyWord;
+
+  closeVocabularyDetailModal();
+
+  deleteVocabularyWord(wordToDelete.id);
 }
 
 function filterVocabularyWords() {
