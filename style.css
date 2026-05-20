@@ -380,9 +380,9 @@ button:active {
   transform: scale(0.98);
 }
 
-.menu-button {
+/*.menu-button {
   background-color: #2ecc71;
-}
+}*/
 
 .bottom-button {
   background-color: #3498db;
