@@ -86,6 +86,7 @@ async function addVocabularyWord() {
   document.getElementById("vocabularyMessage").innerText = "Parola salvata.";
   document.getElementById("italianWord").value = "";
   document.getElementById("englishWord").value = "";
+  closeAddVocabularyModal();
 
   loadVocabularyWords();
 }
@@ -294,6 +295,16 @@ async function confirmDeleteVocabularyWord() {
 
   closeDeleteVocabularyModal();
   loadVocabularyWords();
+}
+
+function openAddVocabularyModal() {
+  document.getElementById("italianWord").value = "";
+  document.getElementById("englishWord").value = "";
+  document.getElementById("addVocabularyModal").style.display = "flex";
+}
+
+function closeAddVocabularyModal() {
+  document.getElementById("addVocabularyModal").style.display = "none";
 }
 
 async function checkInitialAuth() {

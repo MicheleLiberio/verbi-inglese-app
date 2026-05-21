@@ -411,8 +411,8 @@
     >
 
       <div>
-        <button class="menu-button" onclick="addVocabularyWord()">
-        + Aggiungi
+        <button class="menu-button" onclick="openAddVocabularyModal()">
+          + Aggiungi
         </button>
 
         <button class="bottom-button">
@@ -427,7 +427,7 @@
       <input id="englishWord" placeholder="Inglese">
     </div>-->
 
-    <!--<div id="vocabularyMessage" class="result"></div>-->
+    <div id="vocabularyMessage" class="result"></div>
 
     <h3>Le mie parole</h3>
     <div id="vocabularyList" class="history-list"></div>
@@ -459,8 +459,8 @@
   <div class="modal-box">
     <h2>Modifica parola</h2>
 
-    <input id="editItalianWord" placeholder="Italiano">
     <input id="editEnglishWord" placeholder="Inglese">
+    <input id="editItalianWord" placeholder="Italiano">
 
     <div class="modal-actions">
       <button class="bottom-button" onclick="closeEditVocabularyModal()">Annulla</button>
@@ -498,6 +498,19 @@
       <button class="delete-confirm-button" onclick="deleteSelectedVocabularyWord()">Cancella</button>
     </div>
 
+  </div>
+</div>
+<div id="addVocabularyModal" class="modal-overlay">
+  <div class="modal-box">
+    <h2>Aggiungi parola</h2>
+
+    <input id="englishWord" placeholder="Inglese">
+    <input id="italianWord" placeholder="Italiano">
+
+    <div class="modal-actions">
+      <button class="bottom-button" onclick="closeAddVocabularyModal()">Annulla</button>
+      <button class="menu-button" onclick="addVocabularyWord()">Salva</button>
+    </div>
   </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
