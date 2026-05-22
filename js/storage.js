@@ -38,3 +38,38 @@ function loadHistory(type) {
     </div>
   `).join("");
 }
+
+async function saveSessionToSupabase(type, correct, wrong, total) {
+  const user = await getCurrentUser();
+
+  if (!user) return;
+
+  const percentage = Math.round((correct / total) * 100);
+
+  const { error } = await supabaseClient
+    .from("exercise_sessions")
+    .insert({
+      user_id: user.id,
+      exercise_type: type,
+      correct,
+      wrong,
+      total,
+      percentage
+    });
+
+  if (error) {
+    console.error("Errore salvataggio sessione:", error.message);
+  }
+}
+
+function exportLocalData() {
+  const data = {
+    localStorage: { ...localStorage }
+  };
+
+  const text = JSON.stringify(data, null, 2);
+
+  navigator.clipboard.writeText(text);
+
+  alert("Dati copiati negli appunti");
+}

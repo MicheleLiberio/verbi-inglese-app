@@ -80,6 +80,7 @@ function endToIngGame() {
 
   saveHistory("toIng", toIngCorrect, toIngWrong, MAX_QUESTIONS);
   loadHistory("toIng");
+  saveSessionToSupabase("toIng", toIngCorrect, toIngWrong, MAX_QUESTIONS);
 
   document.getElementById("toIngVerb").innerText = "Sessione completata";
   document.getElementById("restartToIngBtn").style.display = "inline-block";
