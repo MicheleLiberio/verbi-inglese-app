@@ -13,28 +13,45 @@ function saveHistory(type, correct, wrong, total) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
 }
 
-function loadHistory(type) {
-  const history = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-  const filtered = history.filter(item => item.type === type);
-
+async function loadHistory(type) {
   let targetId;
+
   if (type === "toIng") targetId = "toIngHistory";
   if (type === "irregular") targetId = "irregularHistory";
   if (type === "reporting") targetId = "reportingHistory";
 
   const container = document.getElementById(targetId);
+
   if (!container) return;
 
-  if (filtered.length === 0) {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    container.innerHTML = "<p>Effettua il login per vedere lo storico.</p>";
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("exercise_sessions")
+    .select("*")
+    .eq("exercise_type", type)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    container.innerHTML = "Errore caricamento storico: " + error.message;
+    return;
+  }
+
+  if (!data || data.length === 0) {
     container.innerHTML = "<p>Nessun risultato salvato.</p>";
     return;
   }
 
-  container.innerHTML = filtered.slice().reverse().map(item => `
+  container.innerHTML = data.map(item => `
     <div class="history-card">
       <strong>${item.correct}/${item.total}</strong> (${item.percentage}%)
       <br>
-      <small>${item.date}</small>
+      <small>${new Date(item.created_at).toLocaleString()}</small>
     </div>
   `).join("");
 }
