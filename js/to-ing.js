@@ -1,5 +1,5 @@
-
 let toIngCurrentCategory = "";
+let toIngCurrentVerb = "";
 let toIngAnswered = false;
 let toIngCorrect = 0;
 let toIngWrong = 0;
@@ -7,6 +7,7 @@ let toIngTotal = 0;
 let toIngGameOver = false;
 let toIngSessionVerbs = [];
 let toIngIndex = 0;
+let toIngAnswers = [];
 
 function prepareToIngSession() {
   toIngSessionVerbs = [];
@@ -42,6 +43,7 @@ function newToIngVerb() {
   const item = toIngSessionVerbs[toIngIndex];
   toIngIndex++;
 
+  toIngCurrentVerb = item.verb;
   toIngCurrentCategory = item.category;
   toIngAnswered = false;
 
@@ -57,13 +59,23 @@ function checkToIng(answer) {
   toIngAnswered = true;
   setToIngButtons(true);
 
-  if (answer === toIngCurrentCategory) {
+  const isCorrect = answer === toIngCurrentCategory;
+
+  if (isCorrect) {
     document.getElementById("toIngResult").innerText = "😊";
     toIngCorrect++;
   } else {
-    document.getElementById("toIngResult").innerText = "😢 Corretto: " + toIngLabels[toIngCurrentCategory];
+    document.getElementById("toIngResult").innerText =
+      "😢 Corretto: " + toIngLabels[toIngCurrentCategory];
     toIngWrong++;
   }
+
+  toIngAnswers.push({
+    question: toIngCurrentVerb,
+    correct_answer: toIngLabels[toIngCurrentCategory],
+    user_answer: toIngLabels[answer],
+    is_correct: isCorrect
+  });
 
   toIngTotal++;
   updateToIngScore();
@@ -75,12 +87,24 @@ function checkToIng(answer) {
   }
 }
 
-function endToIngGame() {
+async function endToIngGame() {
   toIngGameOver = true;
 
   saveHistory("toIng", toIngCorrect, toIngWrong, MAX_QUESTIONS);
-  loadHistory("toIng");
-  saveSessionToSupabase("toIng", toIngCorrect, toIngWrong, MAX_QUESTIONS);
+
+  const sessionId = await saveSessionToSupabase(
+    "toIng",
+    toIngCorrect,
+    toIngWrong,
+    MAX_QUESTIONS
+  );
+
+  if (sessionId) {
+    await saveExerciseAnswers(sessionId, "toIng", toIngAnswers);
+  }
+
+  await loadHistory("toIng");
+  await loadToIngReviewStats();
 
   document.getElementById("toIngVerb").innerText = "Sessione completata";
   document.getElementById("restartToIngBtn").style.display = "inline-block";
@@ -89,7 +113,8 @@ function endToIngGame() {
     document.getElementById("toIngFinal").innerText = "Perfetto! Hai fatto 10/10! 🎉";
     launchFireworks();
   } else {
-    document.getElementById("toIngFinal").innerText = "Hai completato il quiz con " + toIngCorrect + "/10.";
+    document.getElementById("toIngFinal").innerText =
+      "Hai completato il quiz con " + toIngCorrect + "/10.";
   }
 }
 
@@ -99,6 +124,7 @@ function restartToIng() {
   toIngTotal = 0;
   toIngAnswered = false;
   toIngGameOver = false;
+  toIngAnswers = [];
 
   document.getElementById("restartToIngBtn").style.display = "none";
   document.getElementById("toIngResult").innerText = "";

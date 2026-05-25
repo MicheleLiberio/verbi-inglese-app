@@ -8,6 +8,7 @@ function showSection(sectionId) {
   if (sectionId === "toIngPractice") {
     restartToIng();
     loadHistory("toIng");
+    loadToIngReviewStats();
   }
 
   if (sectionId === "irregularPractice") {
